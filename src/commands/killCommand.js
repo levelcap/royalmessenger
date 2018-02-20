@@ -1,4 +1,5 @@
 const { getRandomFromArray } = require('../utils');
+const Discord = require('discord.js');
 
 const deathRattles = [
   'BLARGH!',
@@ -75,7 +76,11 @@ module.exports = {
       const deathRattle = getRandomFromArray(deathRattles);
       const deathDescriber = getRandomFromArray(deathDescribers);
       const killRank = getKillRank(killCount);
-      message.channel.send(`"${deathRattle}" the messenger cries before dying ${deathDescriber}. ((You have killed ${killCount} messengers, you ${killRank}!))`);
+      const text = `"${deathRattle}" the messenger cries before dying ${deathDescriber}. ((You have killed ${killCount} messengers, you ${killRank}!))`;
+      // How to add an image!
+      // const embed = new Discord.RichEmbed({ description: text, color: 16711680 }).setImage('https://cdn.drawception.com/images/panels/2015/12-14/NsjnKQZK3h-12.png');
+      const embed = new Discord.RichEmbed({ description: text, color: 16711680 });
+      message.channel.send(embed);
     }
   },
   killCounts,

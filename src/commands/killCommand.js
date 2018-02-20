@@ -60,6 +60,15 @@ const getKillRank = (killCount) => {
 module.exports = {
   run: (message, userId, username, commandContent) => {
     if (commandContent) {
+      if (commmandContent.toLowerCase().trim() === 'fatlass') {
+        message.channel.send('"I\'m afraid I cannot do that, some things are too beautiful to damage on a whim," the messenger declares while shedding a single tear.');
+        return;
+      }
+
+      if (commmandContent.toLowerCase().trim() === 'kaden') {
+        message.channel.send('"Creator Override Enagaged. Terminating Everyone", the messenger\'s eyes turn red and his skin sloughs off to reveal a skeleton of gleaming chrome beneath. He strangles everyone except Kaden to death. Suck it.');
+        return;
+      }
       const protest = getRandomFromArray(protests);
       let murder = getRandomFromArray(murders);
       let who = `${commandContent}'s`;

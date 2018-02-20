@@ -6,7 +6,8 @@ const AMBER = '272937102784724993';
 const HANNAH = '335859263022956544';
 const ARCHIE = '414858245572657153';
 const NELLY = '335417626417299456';
-const LOLO = '335859263022956544';
+const LOLO = '324949897415753747';
+const HEXUS = '283028963360636929';
 
 const mods = [ KATE, THORSUS, AMBER, HANNAH, ARCHIE ];
 
@@ -53,6 +54,14 @@ const titles = {
   '335417626417299456': {
     ic: [ 'Nellys character has a name, I assume!' ],
     ooc: [ 'Nelly nelly nelly nelly nelly nelly' ],
+  },
+  '324949897415753747': {
+    ic: [ 'Preeesenting this... this guy right here' ],
+    ooc: [ 'Not really sure on who Lo is so have a placeholder' ],
+  },
+  '283028963360636929': {
+    ic: [ 'Ladies and gentlemen, a person, place or thing!' ],
+    ooc: [ 'I also do not know Hex' ],
   }
 };
 

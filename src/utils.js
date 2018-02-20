@@ -100,4 +100,5 @@ module.exports = {
   isMod: (userId) => {
     return  mods.includes(userId);
   },
+  KATE,
 };

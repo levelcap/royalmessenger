@@ -1,4 +1,4 @@
-const { getRandomFromArray } = require('../utils');
+const { getRandomFromArray, KATE } = require('../utils');
 const Discord = require('discord.js');
 
 const deathRattles = [
@@ -73,6 +73,9 @@ module.exports = {
       let murder = getRandomFromArray(murders);
       let who = `${commandContent}'s`;
       if (commandContent.toLowerCase() === 'me') {
+        if (userId === KATE) {
+          return message.channel.send('"Ugh, I really CBA, get somebody else to kill you," grumbles the Royal Messenger without looking up from his phone.');
+        }
         who = `${username}'s`;
       }
       murder = murder.replace('{who}', who);

@@ -8,6 +8,7 @@ const ARCHIE = '414858245572657153';
 const NELLY = '335417626417299456';
 const LOLO = '324949897415753747';
 const HEXUS = '283028963360636929';
+const RAVEN = '196463358461870081';
 
 const mods = [ KATE, THORSUS, AMBER, HANNAH, ARCHIE ];
 
@@ -62,6 +63,10 @@ const titles = {
   '283028963360636929': {
     ic: [ 'Ladies and gentlemen, a person, place or thing!' ],
     ooc: [ 'I also do not know Hex' ],
+  },
+  '196463358461870081': {
+    ic: [ 'I know so few of these people. Am I bad at my job?' ],
+    ooc: [ 'Quoth the Raven, I dunno, something something' ],
   }
 };
 

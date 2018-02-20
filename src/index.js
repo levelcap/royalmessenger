@@ -43,7 +43,7 @@ client.on('message', message => {
       command = commandString.substr(0, commandString.indexOf(' ')).toLowerCase();
       commandContent = commandString.substr(commandString.indexOf(' ') + 1);
     } else {
-      command = commandString;
+      command = commandString.toLowerCase();
     }
 
     if (command === 'messages') {

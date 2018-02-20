@@ -28,11 +28,17 @@ const deathDescribers = [
 const protests = [
   'Oh, I couldn\'t possibly',
   'This goes too far, but on second though, sure',
+  'If you insist,'
+  'I would not want to be part of the cleaning staff today,',
+  'What a surprising turn of the tables,'
 ];
 
 const murders = [
   'driving his dagger into {who} heart with a smile',
   'promptly unslinging a crossbow and putting a bolt between {who} eyes',
+  'peforming the Punch of a Thousand Winds, cause {who} heart to explode out their nose',
+  'polishing a letter opener and plunging it into {who} eye',
+  'incanting "Arcae infernum", engulfing {who} whole body in a dancing blue flame. Since when can they do that?',
 ];
 
 const killCounts = new Map();

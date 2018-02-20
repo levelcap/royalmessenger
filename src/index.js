@@ -7,6 +7,7 @@ const messagesCommand = require('./commands/messagesCommand');
 const oocnounceCommand = require('./commands/oocnounceCommand');
 const announceCommand = require('./commands/announceCommand');
 const statusCommand = require('./commands/statusCommand');
+const helpCommand = require('./commands/helpCommand');
 
 // Create an instance of a Discord client
 const client = new Discord.Client();
@@ -57,6 +58,8 @@ client.on('message', message => {
       oocnounceCommand.run(message, userId);
     } else if (command === 'announce') {
       announceCommand.run(message, userId);
+    } else if (command === 'help' || command === '?') {
+      helpCommand.run(message);
     }
   }
 });

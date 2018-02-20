@@ -60,7 +60,13 @@ const titles = {
     ooc: [ 'Nelly nelly nelly nelly nelly nelly' ],
   },
   '324949897415753747': {
-    ic: [ 'Preeesenting this... this guy right here' ],
+    ic: [ 'Here comes the bard dressed all in light\n' +
+      'Radiant and lovely he shines in  sight\n' +
+      'Gently he glides graceful as a dove\n' +
+      'Meeting his fans his eyes full of love.\n\n' +
+
+      'Love have they waited long have they planned\n' +
+      'Life goes before them opening his hand.' ],
     ooc: [ 'Not really sure on who Lo is so have a placeholder' ],
   },
   '283028963360636929': {

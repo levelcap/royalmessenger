@@ -57,7 +57,7 @@ module.exports = {
       let murder = getRandomFromArray(murders);
       let who = `${commandContent}'s`;
       if (commandContent.toLowerCase() === 'me') {
-        who = 'your';
+        who = `${username}'s`;
       }
       murder = murder.replace('{who}', who);
       message.channel.send(`"${protest}", says the Royal Messenger before ${murder}.`);

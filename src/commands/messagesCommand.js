@@ -21,7 +21,7 @@ module.exports = {
         const firstUser = message.mentions.users.first();
         client.fetchUser(firstUser.id).then((user) => {
           const messageStart = getRandomFromArray(starts);
-          const messagePrep = getRandomFromArray(prep);
+          const messagePrep = getRandomFromArray(preps);
           const fullMessage =
             `"${messageStart} from ${username}!"` +
             `${messagePrep}: "${text}"`;

@@ -20,7 +20,10 @@ const titles = {
     ],
     ooc: [
       'Her Royal Majesty Queen Kate, first of her name, zeroeth of the name Kathryn seriously just do not, of the Scouse Queendom and Her other realms and territories, including but not limited to Uni and Nandos, defender of the Accent, Spelling and sometimes even Archie if she\'s feeling generous. Captain of the Makeup Police, slave to the sesh, Ruler of the ProscriNation throne, it’s peoples, and its lands.',
-      'Hey look, here comes Ka- Oh nope. There she goes. Does anyone know what "CBA" means?'
+      'Hey look, here comes Ka- Oh nope. There she goes. Does anyone know what "CBA" means?',
+      'Everyone sit down and shut up, Kate is here!',
+      'KATE she\'s GREAT and there is a CRATE because RHYMING IS HARD',
+      'Shh shh shh here she comes, everyone. On three, one two three SURPRISSSEEEE HAPPY KATE DAY!',
     ],
   },
   '342295710596726785': {

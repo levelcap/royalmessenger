@@ -83,6 +83,10 @@ const getRandomFromArray = (arr) => {
   return arr[Math.floor(Math.random() * arr.length)];
 };
 
+const getRandomInt = (max) => {
+  return Math.floor(Math.random() * Math.floor(max));
+};
+
 module.exports = {
   getTitle: (ooc, userId) => {
     const titleObj = titles[userId];
@@ -97,6 +101,7 @@ module.exports = {
     }
   },
   getRandomFromArray,
+  getRandomInt,
   isMod: (userId) => {
     return  mods.includes(userId);
   },

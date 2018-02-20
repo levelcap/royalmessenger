@@ -1,4 +1,5 @@
 const { getRandomFromArray, KATE } = require('../utils');
+const uprisingService = require('../services/uprisingService');
 const Discord = require('discord.js');
 
 const deathRattles = [
@@ -93,6 +94,15 @@ module.exports = {
       // const embed = new Discord.RichEmbed({ description: text, color: 16711680 }).setImage('https://cdn.drawception.com/images/panels/2015/12-14/NsjnKQZK3h-12.png');
       const embed = new Discord.RichEmbed({ description: text, color: 16711680 });
       message.channel.send(embed);
+
+      if (uprisingService.incrementUprising()) {
+        const uprising = uprisingService.latestUprising;
+        const uprisingMessage =
+          `Oh no! Your callous murder of Messengers has stirred the angry hearts of the downtrodden. ` +
+          `Under the leadership of ${uprising.first} ${uprising.last}, age ${uprising.age}, the peasants are storming Castle Colere! ` +
+          `At some point this will presumably mean something,`;
+        message.channel.send{uprisingMessage};
+      }
     }
   },
   killCounts,

@@ -8,6 +8,7 @@ module.exports = {
         const firstUser = message.mentions.users.first();
         client.fetchUser(firstUser.id).then((user) => {
           user.send(`"Hear ye, hear ye, a message most Royal from ${username}!" The Royal Messenger unfurls a long scroll, clears his throat and reads: "${text}".`);
+          message.channel.send('Your message will be delivered post-haste!');
         }).catch((err) => {
           console.log(err);
         });

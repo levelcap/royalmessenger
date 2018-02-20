@@ -24,7 +24,8 @@ client.on('ready', () => {
 client.on('message', message => {
   // If the message is "ping"
   const userId = message.author.id;
-  console.log(`${userId} : ${message.author.username}`);
+  const username = message.author.username;
+  console.log(`${userId} : ${username}`);
   if (message.content.includes('/rm')) {
     const content = message.content;
     // Send "pong" to the same channel
@@ -51,7 +52,7 @@ client.on('message', message => {
     } else if (command === 'quest') {
       questCommand.run(message);
     } else if (command === 'kill') {
-      killCommand.run(message, userId);
+      killCommand.run(message, userId, username, commandContent);
     } else if (command === 'oocnounce') {
       oocnounceCommand.run(message, userId);
     } else if (command === 'announce') {

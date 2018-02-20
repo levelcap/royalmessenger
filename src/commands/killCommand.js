@@ -101,7 +101,7 @@ module.exports = {
           `Oh no! Your callous murder of Messengers has stirred the angry hearts of the downtrodden. ` +
           `Under the leadership of ${uprising.first} ${uprising.last}, age ${uprising.age}, the peasants are storming Castle Colere! ` +
           `At some point this will presumably mean something,`;
-        message.channel.send{uprisingMessage};
+        message.channel.send(uprisingMessage);
       }
     }
   },

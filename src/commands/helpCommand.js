@@ -30,6 +30,10 @@ const helpFields = [
     value: 'The Royal Messenger may eventually give you messages, for now he just says a thing.',
   },
   {
+    name: '/rm messages @{user} {message}',
+    value: 'The Royal Messengers will deliver a private message to the user.',
+  },
+  {
     name: '/rm quest',
     value: 'The Royal Messenger will give a quest for the brave and bold.',
   },

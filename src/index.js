@@ -47,7 +47,7 @@ client.on('message', message => {
     }
 
     if (command === 'messages') {
-      messagesCommand.run(message, userId, commandContent);
+      messagesCommand.run(message, client, userId, username, commandContent);
     } else if (command === 'status') {
       statusCommand.run(message, userId, commandContent);
     } else if (command === 'quest') {

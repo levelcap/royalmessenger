@@ -1,0 +1,19 @@
+{
+  "name": "rmbot",
+  "version": "1.0.0",
+  "description": "Royal Messengers",
+  "main": "src/index.js",
+  "engines": {
+    "node": "8.x"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "discord.js": "^11.3.0",
+    "dotenv": "^5.0.0",
+    "lodash": "^4.17.5"
+  }
+}

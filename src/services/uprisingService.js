@@ -31,6 +31,7 @@ module.exports = {
   },
   quellUprising: () => {
     uprisingActive = false;
+    uprisingCounter = 0;
   },
   latestUprising,
   uprisingActive,

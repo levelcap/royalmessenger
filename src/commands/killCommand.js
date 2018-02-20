@@ -60,7 +60,7 @@ const getKillRank = (killCount) => {
 module.exports = {
   run: (message, userId, username, commandContent) => {
     if (commandContent) {
-      if (commandContent.toLowerCase().trim() === 'fatlass') {
+      if (commandContent.toLowerCase().trim().includes('fatlas')) {
         message.channel.send('"I\'m afraid I cannot do that, some things are too beautiful to damage on a whim," the messenger declares while shedding a single tear.');
         return;
       }

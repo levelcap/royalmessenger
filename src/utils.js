@@ -1,16 +1,6 @@
 const _ = require('lodash');
 
 const KATE = '308403239538262028';
-const THORSUS = '342295710596726785';
-const AMBER = '272937102784724993';
-const HANNAH = '335859263022956544';
-const ARCHIE = '414858245572657153';
-const NELLY = '335417626417299456';
-const LOLO = '324949897415753747';
-const HEXUS = '283028963360636929';
-const RAVEN = '196463358461870081';
-
-const mods = [ KATE, THORSUS, AMBER, HANNAH, ARCHIE ];
 
 const titles = {
   '308403239538262028': {
@@ -52,7 +42,7 @@ const titles = {
     ooc: [ 'Hannah hooray!' ],
   },
   '414858245572657153': {
-    ic: [ 'Second Prince of Colere, former ranking Capitan of the artillery regiment. The famed Ice Prince, Atlas Luxure!' ],
+    ic: [ 'Second Prince of Colere, former ranking Captain of the artillery regiment. The famed Ice Prince, Atlas Luxure!' ],
     ooc: [
       'The Ice Prince is here, bitches.',
       'His reigning Dark King of Eton, Archibald.',
@@ -164,8 +154,8 @@ const getRandomInt = (max) => {
 };
 
 module.exports = {
-  getTitle: (ooc, userId) => {
-    const titleObj = titles[userId];
+  getTitle: (ooc, user) => {
+    const titleObj = user.titles || titles[userId];
     if (titleObj) {
       if (ooc) {
         return getRandomFromArray(titleObj.ooc);
@@ -181,8 +171,5 @@ module.exports = {
   },
   getRandomFromArray,
   getRandomInt,
-  isMod: (userId) => {
-    return  mods.includes(userId);
-  },
   KATE,
 };

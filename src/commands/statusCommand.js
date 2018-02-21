@@ -4,7 +4,7 @@ let status = 'Welcome to Eden!';
 module.exports = {
   run: (message, user, commandContent) => {
     if (commandContent) {
-      if (isMod(user._id)) {
+      if (user.mod) {
         status = commandContent;
         message.channel.send(`New status is: ${commandContent}`);
       } else {

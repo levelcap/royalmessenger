@@ -83,6 +83,78 @@ const titles = {
   }
 };
 
+const quellingMissions = [
+  {
+    description: 'The rebels have barricaded a part of the slums, what should we do next?',
+    fields: [
+      {
+        name: 'React with 🙂',
+        value: 'Send a negotiator down to the slums, but make sure they shower before they come back.',
+        weight: 10,
+        risk: .01,
+        positive: 'Talks did some good to cool the situation, but the rebellion continues to plague Colere.',
+        negative: 'The negotiator does not return, but you see him once more, head planted firmly atop a spear on the barricade.',
+        ended: 'Negotiation succeeds where violence may have failed, the rebellion has ended, long live the Royals!',
+      },
+      {
+        name: 'React with 🗡',
+        value: 'Send in the guards to murder the ever-loving shit out of those rebellious cunts!',
+        weight: 50,
+        risk: .2,
+        positive: 'Long hours of bloody fighting have quieted the rebels, but they are not yet done fighting.',
+        negative: 'Damn their poor-person arms, beefy from lifting sacks of dirt to eat! The peasants fight the guards off the barricade and the rebellion grows stronger!',
+        ended: 'You have crushed the rebellious serfs to place the Royals back in their rightful place as the rulers of Colere.',
+      },
+    ],
+  },
+  {
+    description: 'The rebels have sent an envoy to the palace, how should we receive him?',
+    fields: [
+      {
+        name: 'React with 🙂',
+        value: 'Treat them as a visiting dignitary, with respect and kindness',
+        weight: 40,
+        risk: .02,
+        positive: 'Talks go surprisingly well, and the envoy returns to calm his fellow rebels some.',
+        negative: 'Talking go terribly, and the envoy leaves even madder than when they arrived!',
+        ended: 'You are master negotiators, the envoy leaves in a daze, somehow having agreed to end the rebellion and cede the Royals his hovel in return. Huzzah!',
+      },
+      {
+        name: 'React with 🗡',
+        value: 'Slit their throat and feed their corpse to the dogs',
+        weight: 10,
+        risk: .5,
+        positive: 'The rebels tremble as word leaks of your violent reaction to their peaceful overture, none are eager to try again.',
+        negative: 'How did that not work?! The dumb rebels seem ALL MAD that you murdered their peaceful negotiator. Jerks.',
+        ended: 'Jesus, you really did a number on that guy. Urine runs through the gutters as the rebellion sputters out overnight at word of your unrestrained violence.',
+      },
+    ],
+  },
+  {
+    description: 'Peasants are storming one of the grain warehouses like they want food or something. What do we do?',
+    fields: [
+      {
+        name: 'React with 🙂',
+        value: 'The warehouse manager will definitely be able to handle this via communication, no worries here',
+        weight: 100,
+        risk: 1,
+        positive: 'This should never happen, but that somehow worked?',
+        negative: 'So yeah, that guy is hundo-p dead and now the rebels are well fed as well as angry. Good work.',
+        ended: 'This double should never happen, but you have ended the rebellion by doing nothing.',
+      },
+      {
+        name: 'React with 🗡',
+        value: 'A cavalry charge down the main thoroughfare should sort this out nicely.',
+        weight: 80,
+        risk: .1,
+        positive: 'The charge massacres hundreds, churning the streets into a viscous red mush beneath the stomping hooves of the Royal Cavalry. The rebels will not soon try that again.',
+        negative: 'Disaster! Forming a rudimentary spear-wall, the peasant somehow managed to unhorse a Captain of the Royal Cavalry and have been dragging him through the streets behind his own horse for hours!',
+        ended: 'They\'re dead, they`re all dead! Those that were not caught in the mighty charge are left to die, starving in the gutters as the Royals throw a banquet in their own honor. To being rich and powerful forever!',
+      },
+    ],
+  }
+];
+
 const getRandomFromArray = (arr) => {
   return arr[Math.floor(Math.random() * arr.length)];
 };
@@ -103,6 +175,9 @@ module.exports = {
     } else {
       return null;
     }
+  },
+  getRandomQuellingQuest: () => {
+    return getRandomFromArray(quellingMissions);
   },
   getRandomFromArray,
   getRandomInt,

@@ -1,4 +1,4 @@
-const { getRandomInt } = require('../utils');
+const { getRandomInt, getRandomQuellingQuest } = require('../utils');
 const Chance = require('chance');
 const Discord = require('discord.js');
 const mongoServices = require('./mongoServices');
@@ -9,12 +9,10 @@ const returnOriginal = false;
 let uprisingNumber = getRandomInt(UPRISING_CHANCE);
 
 const createUprising = () => {
-  return new Promise((resolve) => {
-    const chance = new Chance();
-    const leaderAge = chance.age({ type: 'adult' });
-    const leader = `${chance.first()} ${chance.last()}, ${leaderAge}`;
-    return resolve(leader);
-  });
+  const chance = new Chance();
+  const leaderAge = chance.age({ type: 'adult' });
+  const leader = `${chance.first()} ${chance.last()}, ${leaderAge}`;
+  return leader;
 };
 
 const riseUp = (latestUprising) => {
@@ -34,11 +32,20 @@ const riseUp = (latestUprising) => {
 const endLatestUprising = (latestUprising) => {
   return new Promise((resolve) => {
     const uprisingCollection = mongoServices.getDb().collection('uprisings');
-    uprisingCollection.findOneAndUpdate({ _id: latestUprising._id }, { $set: { active: true } }, { returnOriginal }, (err, updatedUprising) => {
+    uprisingCollection.findOneAndUpdate({ _id: latestUprising._id }, { $set: { active: false, discontent: 0 } }, { returnOriginal }, (err, updatedUprising) => {
       if (err) {
         console.log(err);
       }
-      resolve(updatedUprising.value);
+      const nextUprising = {
+        leader: createRebelLeader(),
+        discontent: 0,
+        active: false,
+        createdAt: new Date(),
+      };
+
+      uprisingCollection.insertOne(nextUprising, (err, result) => {
+        return resolve(result);
+      });
     });
   });
 };
@@ -142,24 +149,28 @@ const sendUprisingEnds = (message, text) => {
   });
 };
 
-const getRandomQuellingMission = () => {
+const createQuellingQuest = () => {
+  const randomQuest = getRandomQuellingQuest();
   const questionEmbed = new Discord.RichEmbed({
     color: 2672690,
     title: 'Quell the Rebels',
-    description: 'The rebels have barricaded a part of the slums, what should we do next? (Voting open for 60s)',
-    fields: [
-      {
-        name: 'React with 🙂',
-        value: 'Talk it out, we\'re all bros here',
-      },
-      {
-        name: 'React with 🗡',
-        value: 'Stab their goddamn peasant faces until they shut up about it already!',
-      },
-    ],
+    description: randomQuest.description,
+    fields: randomQuest.fields,
   });
 
-  return questionEmbed;
+  const result = {
+    embed: questionEmbed,
+    details: randomQuest,
+  };
+  return result;
+};
+
+const getPeacefulDetails = (questDetails) => {
+  return questDetails.fields[0];
+};
+
+const getViolentDetails = (questDetails) => {
+  return questDetails.fields[1];
 };
 
 module.exports = {
@@ -185,7 +196,8 @@ module.exports = {
     });
   },
   quellUprising: (message) => {
-    const questionEmbed = getRandomQuellingMission();
+    const quest = createQuellingQuest();
+    const questionEmbed = quest.embed;
     message.channel.send(questionEmbed).then((msg) => {
       const filter = (reaction, user) => {
         if (reaction.emoji.name === '🙂' || reaction.emoji.name === '🗡') {
@@ -195,7 +207,7 @@ module.exports = {
       };
       const collector = msg.createReactionCollector(filter, { time: 60000 });
       collector.on('collect', (r) => {
-        console.log(`Collected ${r.emoji}`);
+        // console.log(`Collected ${r.emoji}`);
       });
       collector.on('end', (collected) => {
         let peaceful = 0;
@@ -212,27 +224,37 @@ module.exports = {
             sendUprisingUpdate(message, 'Bickering amongst the Royals prevents any action and the rebellion continues without change.');
           });
         } else if (peaceful > violent) {
-          let quelling = getRandomInt(4);
-          if (getRandomInt(8) % 4 === 0) {
+          const details = getPeacefulDetails(quest.details);
+          let quelling = getRandomInt(details.weight);
+          if (Math.random() < details.risk) {
             quelling *= -1;
           }
           quellResult(message, quelling).then((latestUprising) => {
-            if (latestUprising.active) {
-              sendUprisingUpdate(message, 'Talks did some good to cool the situation, but the rebellion continues to plague Colere.');
+            if (quelling < 0) {
+              sendUprisingUpdate(message, details.negative);
             } else {
-              sendUprisingEnds(message, 'Negotiation succeeds where violence may have failed, the rebellion has ended, long live the Royals!');
+              if (latestUprising.active) {
+                sendUprisingUpdate(message, details.positive);
+              } else {
+                sendUprisingEnds(message, details.ended);
+              }
             }
           });
         } else {
-          let quelling = getRandomInt(10);
-          if (getRandomInt(8) % 2 === 0) {
+          const details = getViolentDetails(quest.details);
+          let quelling = getRandomInt(details.weight);
+          if (Math.random() < details.risk) {
             quelling *= -1;
           }
           quellResult(message, quelling).then((latestUprising) => {
-            if (latestUprising.active) {
-              sendUprisingUpdate(message, 'Long hours of bloody fighting have quieted the rebels, but they are not yet done fighting.');
+            if (quelling < 0) {
+              sendUprisingUpdate(message, details.negative);
             } else {
-              sendUprisingEnds(message, 'You have crushed the rebellious serfs to place the Royals back in their rightful place as the rulers of Colere.');
+              if (latestUprising.active) {
+                sendUprisingUpdate(message, details.positive);
+              } else {
+                sendUprisingEnds(message, details.ended);
+              }
             }
           });
         }

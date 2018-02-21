@@ -166,7 +166,7 @@ module.exports = {
     const questionEmbed = new Discord.RichEmbed({
       color: 2672690,
       title: 'Quell the Rebels',
-      description: 'The rebels have barricaded a part of the slums, what should we do next?',
+      description: 'The rebels have barricaded a part of the slums, what should we do next? (Voting open for 60s)',
       fields: [
         {
           name: 'React with 🙂',
@@ -185,7 +185,7 @@ module.exports = {
         }
         return false;
       };
-      const collector = msg.createReactionCollector(filter, { time: 15000 });
+      const collector = msg.createReactionCollector(filter, { time: 60000 });
       collector.on('collect', (r) => {
         console.log(`Collected ${r.emoji}`);
       });

@@ -200,12 +200,11 @@ module.exports = {
       collector.on('end', (collected) => {
         let peaceful = 0;
         let violent = 0;
-        console.log(collected);
         each(collected.array(), (reaction) => {
           if (reaction._emoji.name === '🙂') {
-            peaceful++;
+            peaceful+=reaction.count;
           } else if (reaction._emoji.name === '🗡') {
-            violent++;
+            violent+=reaction.count;
           }
         });
         if (peaceful === violent) {

@@ -193,14 +193,14 @@ module.exports = {
         }
         return false;
       };
-      const collector = msg.createReactionCollector(filter, { time: 60000 });
+      const collector = msg.createReactionCollector(filter, { time: 10000 });
       collector.on('collect', (r) => {
         console.log(`Collected ${r.emoji}`);
       });
       collector.on('end', (collected) => {
         let peaceful = 0;
         let violent = 0;
-
+        console.log(collected);
         each(collected.array(), (reaction) => {
           if (reaction._emoji.name === '🙂') {
             peaceful++;

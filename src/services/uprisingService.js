@@ -193,7 +193,7 @@ module.exports = {
         }
         return false;
       };
-      const collector = msg.createReactionCollector(filter, { time: 10000 });
+      const collector = msg.createReactionCollector(filter, { time: 60000 });
       collector.on('collect', (r) => {
         console.log(`Collected ${r.emoji}`);
       });

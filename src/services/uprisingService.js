@@ -6,7 +6,6 @@ const UPRISING_CHANCE = 10;
 let uprisingActive = false;
 let discontent = 0;
 let uprisingNumber = getRandomInt(UPRISING_CHANCE);
-let latestUprising = {};
 let leader = '';
 
 const createUprising = () => {
@@ -90,7 +89,10 @@ module.exports = {
     });
     message.channel.send(embed);
   },
-  discontent,
-  latestUprising,
-  uprisingActive,
+  getDiscontent: () => {
+    return this.discontent;
+  },
+  isUprisingActive: () => {
+    return this.uprisingActive;
+  },
 };

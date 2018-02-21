@@ -95,13 +95,13 @@ module.exports = {
       const embed = new Discord.RichEmbed({ description: text, color: 16711680 });
       message.channel.send(embed);
 
-      const premurderUprising = uprisingService.uprisingActive;
+      const premurderUprising = uprisingService.isUprisingActive();
       uprisingService.fomentDiscontent(1);
       if (premurderUprising) {
         console.log('Uprising already started, more discord');
         uprisingService.fomentDiscontent(5);
         uprisingService.sendUprisingUpdate(message, 'The heinous killing of yet another Royal Messenger fans the flames of rebellion!');
-      } else if (uprisingService.uprisingActive) {
+      } else if (uprisingService.isUprisingActive()) {
         console.log('Uprising has begun!');
         uprisingService.sendUprisingBegins(message, `Oh no! Your callous murder of Messengers has stirred the angry hearts of the downtrodden to rise against the royals!`);
       }

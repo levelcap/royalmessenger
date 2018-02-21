@@ -44,7 +44,7 @@ const protests = [
 const murders = [
   'driving his dagger into {who} heart with a smile',
   'promptly unslinging a crossbow and putting a bolt between {who} eyes',
-  'peforming the Punch of a Thousand Winds, cause {who} heart to explode out their nose',
+  'peforming the Punch of a Thousand Winds, causing {who} heart to explode out their nose',
   'polishing a letter opener and plunging it into {who} eye',
   'incanting "Arcae infernum", engulfing {who} whole body in a dancing blue flame. Since when can they do that?',
 ];

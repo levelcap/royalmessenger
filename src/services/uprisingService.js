@@ -90,9 +90,10 @@ module.exports = {
     message.channel.send(embed);
   },
   getDiscontent: () => {
-    return this.discontent;
+    return discontent;
   },
   isUprisingActive: () => {
-    return this.uprisingActive;
+    console.log(uprisingActive);
+    return uprisingActive;
   },
 };

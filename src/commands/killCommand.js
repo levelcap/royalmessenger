@@ -29,7 +29,7 @@ const deathDescribers = [
 
 const protests = [
   'Oh, I couldn\'t possibly',
-  'This goes too far, but on second though, sure',
+  'This goes too far, but on second thought, sure',
   'If you insist,',
   'I would not want to be part of the cleaning staff today,',
   'What a surprising turn of the tables,'

@@ -185,7 +185,7 @@ module.exports = {
     });
   },
   quellUprising: (message) => {
-    const questionEmbded = getRandomQuellingMission();
+    const questionEmbed = getRandomQuellingMission();
     message.channel.send(questionEmbed).then((msg) => {
       const filter = (reaction, user) => {
         if (reaction.emoji.name === '🙂' || reaction.emoji.name === '🗡') {

@@ -19,7 +19,6 @@ module.exports = {
   fomentDiscontent: (amount) => {
     discontent += amount;
     if (!uprisingActive) {
-      console.log(`Uprising Number: ${uprisingNumber}`);
       for (let i = 0; i < discontent; i++) {
         const checkUprising = getRandomInt(UPRISING_CHANCE);
         if (checkUprising === uprisingNumber) {
@@ -40,6 +39,7 @@ module.exports = {
     }
   },
   sendUprisingBegins: (message, text) => {
+    console.log('Uprising begins!');
     const embed = new Discord.RichEmbed({
       color: 13123840,
       title: 'An Uprising Begins!',
@@ -55,6 +55,7 @@ module.exports = {
         }
       ]
     });
+    console.log('Uprising message send attempt!');
     message.channel.send(embed);
   },
   sendUprisingUpdate: (message, text) => {

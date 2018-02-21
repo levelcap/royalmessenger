@@ -45,6 +45,10 @@ const helpFields = [
     name: '/rm status {new status}',
     value: 'Sets a new status for Eden, only works for mods (probably).',
   },
+  {
+    name: '/rm quell',
+    value: 'Sometimes there is rebellion, and sometimes that rebellion needs to be quelled.',
+  },
 ];
 
 const helpEmbed = new Discord.RichEmbed({

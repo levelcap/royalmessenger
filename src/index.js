@@ -1,6 +1,7 @@
 require('dotenv').config();
 const http = require('http');
 const Discord = require('discord.js');
+const mongoServices = require('./services/mongoServices');
 const questCommand = require('./commands/questCommand');
 const killCommand = require('./commands/killCommand');
 const messagesCommand = require('./commands/messagesCommand');
@@ -22,14 +23,7 @@ client.on('ready', () => {
   console.log('I am ready!');
 });
 
-// Create an event listener for messages
-client.on('message', message => {
-  // If the message is "ping"
-  const userId = message.author.id;
-  const username = message.author.username;
-  if (process.env.LOG_NAMES === 'true') {
-    console.log(`${userId} : ${username}`);
-  }
+const handleMessage = (message, user) => {
   if (message.content.includes('/rm')) {
     const content = message.content;
     // Send "pong" to the same channel
@@ -50,30 +44,71 @@ client.on('message', message => {
     }
 
     if (command === 'messages') {
-      messagesCommand.run(message, client, userId, username, commandContent);
+      messagesCommand.run(message, client, user, commandContent);
     } else if (command === 'status') {
-      statusCommand.run(message, userId, commandContent);
+      statusCommand.run(message, user, commandContent);
     } else if (command === 'quest') {
       questCommand.run(message);
     } else if (command === 'kill') {
-      killCommand.run(message, userId, username, commandContent);
+      killCommand.run(message, user, commandContent);
     } else if (command === 'oocnounce') {
-      oocnounceCommand.run(message, userId);
+      oocnounceCommand.run(message, user);
     } else if (command === 'announce') {
-      announceCommand.run(message, userId);
+      announceCommand.run(message, user);
     } else if (command === 'help' || command === '?') {
       helpCommand.run(message);
     } else if (command === 'quell') {
       quellCommand.run(message);
     }
   }
+};
+
+// Create an event listener for messages
+client.on('message', message => {
+  if (message.author.bot) return;
+
+  const db = mongoServices.getDb();
+  const users = db.collection('users');
+
+  // If the message is "ping"
+  const userId = message.author.id;
+  const username = message.author.username;
+  if (process.env.LOG_NAMES === 'true') {
+    console.log(`${userId} : ${username}`);
+  }
+
+  users.findOne({ _id: userId }, (err, foundUser) => {
+    if (foundUser) {
+      return handleMessage(message, foundUser);
+    }
+    const newUser = {
+      _id: userId,
+      name: username,
+    };
+    users.insertOne(newUser, (err, result) => {
+      return handleMessage(message, newUser);
+    });
+  });
 });
 
-// Log our bot in
-client.login(token);
+// Connection URL
+const url = process.env.MONGODB_URI;
 
-http.createServer((req, res) => {
-  res.writeHead(200, "OK");
-  res.write("<h1>Hello</h1>Node.js is working");
-  res.end();
-}).listen(process.env.PORT || 3000);
+// Use connect method to connect to the server
+mongoServices.connectDb((err) => {
+  if (err) {
+    console.log('Error connecting to Mongo, exiting');
+    console.log(err);
+    return;
+  }
+  console.log("Connected successfully to MongoDB, logging into Discord");
+
+  // Log our bot in
+  client.login(token);
+
+  http.createServer((req, res) => {
+    res.writeHead(200, "OK");
+    res.write("<h1>This is nothing</h1>");
+    res.end();
+  }).listen(process.env.PORT || 3000);
+});

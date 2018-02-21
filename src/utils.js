@@ -52,8 +52,12 @@ const titles = {
     ooc: [ 'Hannah hooray!' ],
   },
   '414858245572657153': {
-    ic: [ 'His Royal something the guy that Archie plays, the sneering one' ],
-    ooc: [ 'The Ice Prince is here, bitches.' ],
+    ic: [ 'Second Prince of Colere, former ranking Capitan of the artillery regiment. The famed Ice Prince, Atlas Luxure!' ],
+    ooc: [
+      'The Ice Prince is here, bitches.',
+      'His reigning Dark King of Eton, Archibald.',
+      'Archie heard ya talking shit, bitch. Bye, Felicia!',
+    ],
   },
   '335417626417299456': {
     ic: [ 'Nellys character has a name, I assume!' ],

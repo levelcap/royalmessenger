@@ -2,9 +2,9 @@ const { isMod } = require('../utils');
 let status = 'Welcome to Eden!';
 
 module.exports = {
-  run: (message, userId, commandContent) => {
+  run: (message, user, commandContent) => {
     if (commandContent) {
-      if (isMod(userId)) {
+      if (isMod(user._id)) {
         status = commandContent;
         message.channel.send(`New status is: ${commandContent}`);
       } else {

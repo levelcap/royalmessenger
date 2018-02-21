@@ -14,18 +14,18 @@ const preps = [
 ];
 
 module.exports = {
-  run: (message, client, userId, username, commandContent) => {
+  run: (message, client, user, commandContent) => {
     if (commandContent) {
       const text = commandContent.substr(commandContent.indexOf(' ') + 1);
       if (message.mentions.users && message.mentions.users.first()) {
         const firstUser = message.mentions.users.first();
-        client.fetchUser(firstUser.id).then((user) => {
+        client.fetchUser(firstUser.id).then((toUser) => {
           const messageStart = getRandomFromArray(starts);
           const messagePrep = getRandomFromArray(preps);
           const fullMessage =
-            `"${messageStart} from ${username}!"` +
+            `"${messageStart} from ${user.name}!"` +
             `${messagePrep}: "${text}"`;
-          user.send(fullMessage);
+          toUser.send(fullMessage);
           message.channel.send('Your message will be delivered post-haste!');
         }).catch((err) => {
           console.log(err);

@@ -95,13 +95,13 @@ module.exports = {
       const embed = new Discord.RichEmbed({ description: text, color: 16711680 });
       message.channel.send(embed);
 
-      if (uprisingService.incrementUprising()) {
-        const uprising = uprisingService.latestUprising;
-        const uprisingMessage =
-          `Oh no! Your callous murder of Messengers has stirred the angry hearts of the downtrodden. ` +
-          `Under the leadership of ${uprising.first} ${uprising.last}, age ${uprising.age}, the peasants are storming Castle Colere! ` +
-          `At some point this will presumably mean something,`;
-        message.channel.send(uprisingMessage);
+      const premurderUprising = uprisingService.uprisingActive;
+      uprisingService.fomentDiscontent(1);
+      if (premurderUprising) {
+        uprisingService.fomentDiscontent(5);
+        uprisingService.sendUprisingUpdate(message, 'The heinous killing of yet another Royal Messenger fans the flames of rebellion!');
+      } else if (uprisingService.uprisingActive) {
+        uprisingService.sendUprisingBegins(message, `Oh no! Your callous murder of Messengers has stirred the angry hearts of the downtrodden to rise against the royals!`);
       }
     }
   },

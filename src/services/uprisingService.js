@@ -1,38 +1,92 @@
 const { getRandomInt } = require('../utils');
 const Chance = require('chance');
+const Discord = require('discord.js');
 const UPRISING_CHANCE = 10;
 
 let uprisingActive = false;
-let uprisingCounter = 0;
+let discontent = 0;
 let uprisingNumber = getRandomInt(UPRISING_CHANCE);
-const latestUprising = {};
+let latestUprising = {};
+let leader = '';
 
 const createUprising = () => {
   const chance = new Chance();
-  latestUprising.age = chance.age({type: 'adult'});
-  latestUprising.first = chance.first();
-  latestUprising.last = chance.last();
+  const leaderAge = chance.age({type: 'adult'});
+  leader = `${chance.first()} ${chance.last()}, ${leaderAge}`;
 };
 
 module.exports = {
-  incrementUprising: () => {
-    uprisingCounter++;
+  fomentDiscontent: (amount) => {
+    discontent += amount;
     if (!uprisingActive) {
-      for (let i = 0; i < uprisingCounter; i++) {
+      for (let i = 0; i < discontent; i++) {
         const checkUprising = getRandomInt(UPRISING_CHANCE);
         if (checkUprising === uprisingNumber) {
           createUprising();
           uprisingActive = true;
-          return true;
         }
       }
     }
-    return false;
   },
   quellUprising: () => {
-    uprisingActive = false;
-    uprisingCounter = 0;
+    const quelling = getRandomInt(6);
+    discontent -= quelling;
+    if (discontent <= 0) {
+      uprisingActive = false;
+      discontent = 0;
+    }
   },
+  sendUprisingBegins: (message, text) => {
+    const embed = new Discord.RichEmbed({
+      color: 13123840,
+      title: 'An Uprising Begins!',
+      description: text,
+      fields: [
+        {
+          name: 'Leader',
+          value: leader,
+        },
+        {
+          name: 'Uprising Strength',
+          value: discontent,
+        }
+      ]
+    });
+    message.send(embed);
+  },
+  sendUprisingUpdate: (message, text) => {
+    const embed = new Discord.RichEmbed({
+      color: 13123840,
+      title: 'The Uprising Continues!',
+      description: text,
+      fields: [
+        {
+          name: 'Leader',
+          value: leader,
+        },
+        {
+          name: 'Uprising Strength',
+          value: discontent,
+        }
+      ]
+    });
+    message.send(embed);
+  },
+  sendUprisingEnds: (message, text) => {
+    const embed = new Discord.RichEmbed({
+      color: 13123840,
+      title: 'The Uprising is Over, Long Live the Royals!',
+      description: text,
+      fields: [
+        {
+          name: 'Former Leader, Current Wormfood',
+          value: leader,
+        },
+      ]
+    });
+    message.send(embed);
+  },
+  discontent,
   latestUprising,
   uprisingActive,
 };

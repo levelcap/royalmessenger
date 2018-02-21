@@ -27,7 +27,9 @@ client.on('message', message => {
   // If the message is "ping"
   const userId = message.author.id;
   const username = message.author.username;
-  console.log(`${userId} : ${username}`);
+  if (process.env.LOG_NAMES === 'true') {
+    console.log(`${userId} : ${username}`);
+  }
   if (message.content.includes('/rm')) {
     const content = message.content;
     // Send "pong" to the same channel

@@ -23,7 +23,6 @@ module.exports = {
         if (checkUprising === uprisingNumber) {
           createUprising();
           uprisingActive = true;
-          console.log('Uprising!');
           return;
         }
       }
@@ -38,7 +37,6 @@ module.exports = {
     }
   },
   sendUprisingBegins: (message, text) => {
-    console.log('Uprising begins!');
     const embed = new Discord.RichEmbed({
       color: 13123840,
       title: 'An Uprising Begins!',
@@ -54,7 +52,6 @@ module.exports = {
         }
       ]
     });
-    console.log('Uprising message send attempt!');
     message.channel.send(embed);
   },
   sendUprisingUpdate: (message, text) => {
@@ -93,7 +90,6 @@ module.exports = {
     return discontent;
   },
   isUprisingActive: () => {
-    console.log(uprisingActive);
     return uprisingActive;
   },
 };

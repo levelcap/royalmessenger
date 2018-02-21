@@ -113,6 +113,13 @@ module.exports = {
         return;
       }
 
+      if (commandContent.toLowerCase().includes('vera')) {
+        message.channel.send('"Of course, Your Most Beneficientness, just one moment while I... now!" ' +
+          'At the Royal Messenger\'s cry, dozens of men and women wielding crossbows appear from THE SHADOWS and open fire on you. ' +
+          'The Royal Messenger laughs manically and holds a rusty sword high, "Long live Vera Rhodes, hero of the rebellion!"');
+        return;
+      }
+
       const protest = getRandomFromArray(protests);
       let murder = getRandomFromArray(murders);
       let who = `${commandContent}'s`;

@@ -75,8 +75,6 @@ const quellResult = (message, quelling) => {
   return new Promise((resolve) => {
     fetchLatestUprising().then((latestUprising) => {
       latestUprising.discontent -= quelling;
-      console.log(quelling);
-      console.log(latestUprising);
       if (latestUprising.discontent <= 0) {
         endLatestUprising(latestUprising).then((updated) => {
           return resolve(updated);

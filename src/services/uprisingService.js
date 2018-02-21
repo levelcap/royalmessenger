@@ -19,8 +19,10 @@ module.exports = {
   fomentDiscontent: (amount) => {
     discontent += amount;
     if (!uprisingActive) {
+      console.log(`Uprising Number: ${uprisingNumber}`);
       for (let i = 0; i < discontent; i++) {
         const checkUprising = getRandomInt(UPRISING_CHANCE);
+        console.log(checkUprising);
         if (checkUprising === uprisingNumber) {
           createUprising();
           uprisingActive = true;

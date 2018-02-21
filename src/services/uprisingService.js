@@ -22,10 +22,11 @@ module.exports = {
       console.log(`Uprising Number: ${uprisingNumber}`);
       for (let i = 0; i < discontent; i++) {
         const checkUprising = getRandomInt(UPRISING_CHANCE);
-        console.log(checkUprising);
         if (checkUprising === uprisingNumber) {
           createUprising();
           uprisingActive = true;
+          console.log('Uprising!');
+          return;
         }
       }
     }
@@ -54,7 +55,7 @@ module.exports = {
         }
       ]
     });
-    message.send(embed);
+    message.channel.send(embed);
   },
   sendUprisingUpdate: (message, text) => {
     const embed = new Discord.RichEmbed({
@@ -72,7 +73,7 @@ module.exports = {
         }
       ]
     });
-    message.send(embed);
+    message.channel.send(embed);
   },
   sendUprisingEnds: (message, text) => {
     const embed = new Discord.RichEmbed({
@@ -86,7 +87,7 @@ module.exports = {
         },
       ]
     });
-    message.send(embed);
+    message.channel.send(embed);
   },
   discontent,
   latestUprising,

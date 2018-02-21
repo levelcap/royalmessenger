@@ -46,7 +46,7 @@ const endLatestUprising = (latestUprising) => {
 const updateDiscontent = (latestUprising) => {
   return new Promise((resolve) => {
     const uprisingCollection = mongoServices.getDb().collection('uprisings');
-    uprisingCollection.findOneAndUpdate({ _id: latestUprising._id }, { $set: { active: true } }, { returnOriginal }, (err, updatedUprising) => {
+    uprisingCollection.findOneAndUpdate({ _id: latestUprising._id }, { $set: { discontent: latestUprising.discontent } }, { returnOriginal }, (err, updatedUprising) => {
       if (err) {
         console.log(err);
       }
@@ -68,6 +68,8 @@ const quellResult = (message, quelling) => {
   return new Promise((resolve) => {
     fetchLatestUprising().then((latestUprising) => {
       latestUprising.discontent -= quelling;
+      console.log(quelling);
+      console.log(latestUprising);
       if (latestUprising.discontent <= 0) {
         endLatestUprising(latestUprising).then((updated) => {
           return resolve(updated);
@@ -140,6 +142,26 @@ const sendUprisingEnds = (message, text) => {
   });
 };
 
+const getRandomQuellingMission = () => {
+  const questionEmbed = new Discord.RichEmbed({
+    color: 2672690,
+    title: 'Quell the Rebels',
+    description: 'The rebels have barricaded a part of the slums, what should we do next? (Voting open for 60s)',
+    fields: [
+      {
+        name: 'React with 🙂',
+        value: 'Talk it out, we\'re all bros here',
+      },
+      {
+        name: 'React with 🗡',
+        value: 'Stab their goddamn peasant faces until they shut up about it already!',
+      },
+    ],
+  });
+
+  return questionEmbed;
+};
+
 module.exports = {
   fomentDiscontent: (amount) => {
     return new Promise((resolve) => {
@@ -163,21 +185,7 @@ module.exports = {
     });
   },
   quellUprising: (message) => {
-    const questionEmbed = new Discord.RichEmbed({
-      color: 2672690,
-      title: 'Quell the Rebels',
-      description: 'The rebels have barricaded a part of the slums, what should we do next? (Voting open for 60s)',
-      fields: [
-        {
-          name: 'React with 🙂',
-          value: 'Talk it out, we\'re all bros here',
-        },
-        {
-          name: 'React with 🗡',
-          value: 'Stab their goddamn peasant faces until they shut up about it already!',
-        },
-      ],
-    });
+    const questionEmbded = getRandomQuellingMission();
     message.channel.send(questionEmbed).then((msg) => {
       const filter = (reaction, user) => {
         if (reaction.emoji.name === '🙂' || reaction.emoji.name === '🗡') {

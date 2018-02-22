@@ -14,7 +14,7 @@ const preps = [
 ];
 
 const images = [
-  '/images/the-end.jpg',
+  '/images/messenger1.gif',
 ];
 
 module.exports = {
@@ -36,9 +36,10 @@ module.exports = {
             description: fullMessage,
           });
           const image = getRandomFromArray(images);
+          console.log(image);
           embed.setImage(`${process.env.BASE_URL}${image}`);
-
           toUser.send(embed);
+
           message.channel.send('Your message will be delivered post-haste!');
         }).catch((err) => {
           console.log(err);

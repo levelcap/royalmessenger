@@ -32,7 +32,7 @@ module.exports = {
         });
       }
     } else {
-      message.channel.send('Message for you sir!');
+      message.channel.send('Message for you sir! :scroll:');
     }
   }
 };

@@ -1,12 +1,30 @@
 const { getRandomFromArray } = require('../utils');
+const questServices = require('../services/questServices');
+
 const quests = [
-  'Your Majesties, a whole bunch of dirty peasants are causing quite the ruckus outside the castle gates, with stupid demands like "We want food" and "Our children all have dysentry."',
-  'Your Grand Highnesses, the merchant caravan carrying all of the finest silks for your backsides has been attacked by bandits on the Royal Road!',
-  'Your Most Excellencies, three unicorns have been spotted riding a dragon over the mountains!',
+  {
+      questId: 1,
+      page: 1,
+      title: 'A Hunt, We\'ll Have a Hunt!',
+      description: 'A rare white stag has been spotted in the Royal Forests! What would you like to do next?',
+      fields: [
+        {
+          name: 'React with :deer:',
+          value: 'Sound the horns, we are going on a hunt!',
+          next: 2,
+        },
+        {
+          name: 'React with :bed:',
+          value: 'Sounds boring, lets sleep in instead.',
+          weight: 50,
+          next: 3,
+        },
+      ],
+  },
 ];
 
 module.exports = {
   run: (message) => {
-    message.channel.send(getRandomFromArray(quests));
+    questServices.beginQuest(message);
   },
 };

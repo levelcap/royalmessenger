@@ -109,7 +109,8 @@ module.exports = {
       }
 
       if (commandContent.toLowerCase().trim() === 'kaden') {
-        message.channel.send('"Creator Override Enagaged. Terminating Everyone", the messenger\'s eyes turn red and his skin sloughs off to reveal a skeleton of gleaming chrome beneath. He strangles everyone except Kaden to death. Suck it.');
+        // message.channel.send('"Creator Override Enagaged. Terminating Everyone", the messenger\'s eyes turn red and his skin sloughs off to reveal a skeleton of gleaming chrome beneath. He strangles everyone except Kaden to death. Suck it.');
+        message.channel.send('"No problemo, boss," the Royal Messenger says with a thumbs up and a wink before driving that same thumb into Kaden\'s throat and watching while he squirms and dies. "So uhhhhhh... who wants to update this thing now?"');
         return;
       }
 

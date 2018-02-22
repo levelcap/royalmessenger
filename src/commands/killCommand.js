@@ -128,7 +128,7 @@ module.exports = {
         if (user._id === KATE) {
           return message.channel.send('"Ugh, I really CBA, get somebody else to kill you," grumbles the Royal Messenger without looking up from his phone.');
         }
-        who = `${username}'s`;
+        who = `${user.name}'s`;
       }
       murder = murder.replace('{who}', who);
       message.channel.send(`"${protest}", says the Royal Messenger before ${murder}.`);

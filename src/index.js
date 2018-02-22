@@ -44,7 +44,7 @@ const handleMessage = (message, user) => {
       command = commandString.toLowerCase();
     }
 
-    if (command === 'messages') {
+    if (command === 'messages' || command === 'message') {
       messagesCommand.run(message, client, user, commandContent);
     } else if (command === 'status') {
       statusCommand.run(message, user, commandContent);
@@ -64,8 +64,7 @@ const handleMessage = (message, user) => {
   }
 };
 
-// Create an event listener for messages
-client.on('message', message => {
+const parseMessage = (message) => {
   if (message.author.bot) return;
 
   const db = mongoServices.getDb();
@@ -90,6 +89,16 @@ client.on('message', message => {
       return handleMessage(message, newUser);
     });
   });
+}
+
+// Create an event listener for messages
+client.on('message', message => {
+  parseMessage(message);
+});
+
+client.on('messageUpdate', (oldMessage, message) => {
+  console.log(`old message: ${message.content}`);
+  parseMessage(message);
 });
 
 // Connection URL

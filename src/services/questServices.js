@@ -45,22 +45,22 @@ const fetchQuestPage = (questId, page) => {
   });
 };
 
-const endQuest = (message, questResult) => {
+const endQuest = (message, endQuestDetails) => {
+  console.log(endQuestDetails);
   const questEmbed = new Discord.RichEmbed({
     color: 0,
-    title: questResult.title,
-    description: questResult.description,
+    title: endQuestDetails.title,
+    description: endQuestDetails.description,
   });
-
   const imageUrl = `${process.env.BASE_URL}/images/the-end.jpg`;
   questEmbed.setImage(imageUrl);
+  console.log(questEmbed);
   message.channel.send(questEmbed);
 };
 
 const runQuest = (message, questResult) => {
-  console.log(questResult);
   if (!questResult.details.fields) {
-    return endQuest(message, questResult);
+    return endQuest(message, questResult.details);
   }
 
   const questEmbed = questResult.embed;
@@ -72,7 +72,7 @@ const runQuest = (message, questResult) => {
       }
       return false;
     };
-    const collector = msg.createReactionCollector(filter, { time: 60000 });
+    const collector = msg.createReactionCollector(filter, { time: 15000 });
     collector.on('collect', (r) => {
       console.log(`Collected ${r.emoji}`);
     });
@@ -98,8 +98,10 @@ const runQuest = (message, questResult) => {
       if (first < second) {
         index = 1;
       }
-      fetchQuestPage(questResult.details.questId, quest.details.fields[index].next).then((questResult) => {
-        runQuest(message, questResult);
+      console.log(questResult.details.questId);
+      console.log(questResult.details.fields[index].next);
+      fetchQuestPage(questResult.details.questId, questResult.details.fields[index].next).then((nextQuestPage) => {
+        runQuest(message, nextQuestPage);
       });
     });
   });

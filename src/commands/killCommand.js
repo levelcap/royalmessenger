@@ -49,6 +49,10 @@ const murders = [
   'incanting "Arcae infernum", engulfing {who} whole body in a dancing blue flame. Since when can they do that?',
 ];
 
+const kateSuicide = [
+  '"Ugh, I really CBA, get somebody else to kill you," grumbles the Royal Messenger without looking up from his phone.',
+];
+
 const getKillRank = (killCount) => {
   if (killCount < 10) {
     return 'stab-happy amateur';
@@ -126,7 +130,7 @@ module.exports = {
       let who = `${commandContent}'s`;
       if (commandContent.toLowerCase() === 'me') {
         if (user._id === KATE) {
-          return message.channel.send('"Ugh, I really CBA, get somebody else to kill you," grumbles the Royal Messenger without looking up from his phone.');
+          return message.channel.send(getRandomFromArray(kateSuicide));
         }
         who = `${user.name}'s`;
       }

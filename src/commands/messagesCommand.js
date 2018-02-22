@@ -15,6 +15,9 @@ const preps = [
 
 const images = [
   '/images/messenger1.gif',
+  '/images/messenger2.gif',
+  '/images/messenger3.gif',
+  '/images/messenger4.gif',
 ];
 
 module.exports = {

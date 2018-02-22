@@ -1,5 +1,6 @@
 require('dotenv').config();
-const http = require('http');
+const express = require('express')
+const app = express();
 const Discord = require('discord.js');
 const mongoServices = require('./services/mongoServices');
 const questCommand = require('./commands/questCommand');
@@ -105,10 +106,7 @@ mongoServices.connectDb((err) => {
 
   // Log our bot in
   client.login(token);
-
-  http.createServer((req, res) => {
-    res.writeHead(200, "OK");
-    res.write("<h1>This is nothing</h1>");
-    res.end();
-  }).listen(process.env.PORT || 3000);
+  app.get('/', (req, res) => res.send('<h1>This is nothing</h1>'));
+  const port = process.env.PORT || 3000;
+  app.listen(port, () => console.log(`RoyalMessengers listening on ${port}`))
 });

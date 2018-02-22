@@ -14,8 +14,9 @@ const fetchRandomQuest = () => {
         title: quest.title,
         description: quest.description,
         fields: quest.fields,
-        image: '/resources/images/the-end.jpg',
       });
+      const imageUrl = `${process.env.BASE_URL}/images/the-end.jpg`;
+      questEmbed.setImage(imageUrl);
 
       const result = {
         embed: questEmbed,
@@ -36,6 +37,9 @@ const fetchQuestPage = (questId, page) => {
         description: quest.description,
         fields: quest.fields,
       });
+
+      const imageUrl = `${process.env.BASE_URL}/images/the-end.jpg`;
+      questEmbed.setImage(imageUrl);
 
       const result = {
         embed: questEmbed,
@@ -87,7 +91,7 @@ const runQuest = (message, questResult) => {
       if (first < second) {
         index = 1;
       }
-      fetchQuestPage(questId, quest.details[index].next).then((questResult) => {
+      fetchQuestPage(questResult.details.questId, quest.details[index].next).then((questResult) => {
         runQuest(message, questResult);
       });
     });

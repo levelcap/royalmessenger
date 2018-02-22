@@ -106,6 +106,7 @@ mongoServices.connectDb((err) => {
 
   // Log our bot in
   client.login(token);
+  app.use(express.static('public'));
   app.get('/', (req, res) => res.send('<h1>This is nothing</h1>'));
   const port = process.env.PORT || 3000;
   app.listen(port, () => console.log(`RoyalMessengers listening on ${port}`))

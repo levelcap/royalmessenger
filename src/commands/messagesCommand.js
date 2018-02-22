@@ -13,6 +13,10 @@ const preps = [
   'The Royal Messenger instinctively covers his vitals before reading from a dirty note'
 ];
 
+const images = [
+  '/images/the-end.jpg',
+];
+
 module.exports = {
   run: (message, client, user, commandContent) => {
     if (commandContent) {
@@ -25,7 +29,16 @@ module.exports = {
           const fullMessage =
             `"${messageStart} from ${user.name}!"` +
             `${messagePrep}: "${text}"`;
-          toUser.send(fullMessage);
+
+          const embed = new Discord.RichEmbed({
+            color: 15654822,
+            title: 'A messenger arrives!',
+            description: fullMessage,
+          });
+          const image = getRandomFromArray(images);
+          embed.setImage(`${process.env.BASE_URL}${image}`);
+
+          toUser.send(embed);
           message.channel.send('Your message will be delivered post-haste!');
         }).catch((err) => {
           console.log(err);

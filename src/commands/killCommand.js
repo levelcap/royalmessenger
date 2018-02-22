@@ -51,6 +51,7 @@ const murders = [
 
 const kateSuicide = [
   '"Ugh, I really CBA, get somebody else to kill you," grumbles the Royal Messenger without looking up from his phone.',
+  '"Yeah but that sounds like a lot of effort," the Royal Messenger says while wandering off',
 ];
 
 const getKillRank = (killCount) => {

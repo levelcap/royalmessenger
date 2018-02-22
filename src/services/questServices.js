@@ -15,8 +15,6 @@ const fetchRandomQuest = () => {
         description: quest.description,
         fields: quest.fields,
       });
-      const imageUrl = `${process.env.BASE_URL}/images/the-end.jpg`;
-      questEmbed.setImage(imageUrl);
 
       const result = {
         embed: questEmbed,
@@ -38,9 +36,6 @@ const fetchQuestPage = (questId, page) => {
         fields: quest.fields,
       });
 
-      const imageUrl = `${process.env.BASE_URL}/images/the-end.jpg`;
-      questEmbed.setImage(imageUrl);
-
       const result = {
         embed: questEmbed,
         details: quest,
@@ -50,10 +45,22 @@ const fetchQuestPage = (questId, page) => {
   });
 };
 
+const endQuest = (message, questResult) => {
+  const questEmbed = new Discord.RichEmbed({
+    color: 0,
+    title: questResult.title,
+    description: questResult.description,
+  });
+
+  const imageUrl = `${process.env.BASE_URL}/images/the-end.jpg`;
+  questEmbed.setImage(imageUrl);
+  message.channel.send(questEmbed);
+};
+
 const runQuest = (message, questResult) => {
   console.log(questResult);
   if (!questResult.details.fields) {
-    endQuest(message, questResult);
+    return endQuest(message, questResult);
   }
 
   const questEmbed = questResult.embed;
@@ -91,7 +98,7 @@ const runQuest = (message, questResult) => {
       if (first < second) {
         index = 1;
       }
-      fetchQuestPage(questResult.details.questId, quest.details[index].next).then((questResult) => {
+      fetchQuestPage(questResult.details.questId, quest.details.fields[index].next).then((questResult) => {
         runQuest(message, questResult);
       });
     });

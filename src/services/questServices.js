@@ -46,15 +46,13 @@ const fetchQuestPage = (questId, page) => {
 };
 
 const endQuest = (message, endQuestDetails) => {
-  console.log(endQuestDetails);
   const questEmbed = new Discord.RichEmbed({
     color: 0,
     title: endQuestDetails.title,
     description: endQuestDetails.description,
   });
-  const imageUrl = `${process.env.BASE_URL}/images/the-end.jpg`;
+  const imageUrl = endQuestDetails.endImage || `${process.env.BASE_URL}/images/the-end.jpg`;
   questEmbed.setImage(imageUrl);
-  console.log(questEmbed);
   message.channel.send(questEmbed);
 };
 
@@ -72,9 +70,9 @@ const runQuest = (message, questResult) => {
       }
       return false;
     };
-    const collector = msg.createReactionCollector(filter, { time: 60000 });
+    const collector = msg.createReactionCollector(filter, { time: 30000 });
     collector.on('collect', (r) => {
-      console.log(`Collected ${r.emoji}`);
+      // console.log(`Collected ${r.emoji}`);
     });
     collector.on('end', (collected) => {
       let first = 0;
@@ -98,8 +96,6 @@ const runQuest = (message, questResult) => {
       if (first < second) {
         index = 1;
       }
-      console.log(questResult.details.questId);
-      console.log(questResult.details.fields[index].next);
       fetchQuestPage(questResult.details.questId, questResult.details.fields[index].next).then((nextQuestPage) => {
         runQuest(message, nextQuestPage);
       });
@@ -117,7 +113,6 @@ const questEmoji = (quest) => {
     const emojiString = field.name.replace('React with ', '');
     emojiArray.push(emojiString);
   });
-  console.log(emojiArray);
   return emojiArray;
 };
 

@@ -97,7 +97,6 @@ client.on('message', message => {
 });
 
 client.on('messageUpdate', (oldMessage, message) => {
-  console.log(`old message: ${message.content}`);
   parseMessage(message);
 });
 

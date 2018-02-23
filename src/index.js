@@ -51,7 +51,7 @@ const handleMessage = (message, user) => {
     } else if (command === 'status') {
       statusCommand.run(message, user, commandContent);
     } else if (command === 'quest') {
-      questCommand.run(message);
+      questCommand.run(message, commandContent);
     } else if (command === 'kill') {
       killCommand.run(message, user, commandContent);
     } else if (command === 'oocnounce') {

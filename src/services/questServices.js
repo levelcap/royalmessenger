@@ -118,9 +118,15 @@ const questEmoji = (quest) => {
 };
 
 module.exports = {
-  beginQuest: (message) => {
-    const quest = fetchRandomQuest().then((questResult) => {
-      runQuest(message, questResult);
-    });
+  beginQuest: (message, questNumber) => {
+    if (questNumber) {
+      const quest = fetchRandomQuest().then((questResult) => {
+        runQuest(message, questResult);
+      });
+    } else {
+      const quest = fetchQuestPage(questNumber, 1).then((questResult) => {
+        runQuest(message, questResult);
+      });
+    }
   },
 };

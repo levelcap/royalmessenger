@@ -24,7 +24,11 @@ const quests = [
 ];
 
 module.exports = {
-  run: (message) => {
-    questServices.beginQuest(message);
+  run: (message, questNumber) => {
+    if (!questNumber && parseInt(questNumber)) {
+      questServices.beginQuest(message, parseInt(questNumber));
+    } else {
+      questServices.beginQuest(message)
+    }
   },
 };

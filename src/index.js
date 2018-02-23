@@ -11,6 +11,8 @@ const announceCommand = require('./commands/announceCommand');
 const statusCommand = require('./commands/statusCommand');
 const helpCommand = require('./commands/helpCommand');
 const quellCommand = require('./commands/quellCommand');
+const mockCommand = require('./commands/mockCommand');
+let lastMessage = '';
 
 // Create an instance of a Discord client
 const client = new Discord.Client();
@@ -60,6 +62,8 @@ const handleMessage = (message, user) => {
       helpCommand.run(message);
     } else if (command === 'quell') {
       quellCommand.run(message);
+    } else if (command === 'mock') {
+      mockCommand.run(message, lastMessage);
     }
   }
 };
@@ -89,11 +93,12 @@ const parseMessage = (message) => {
       return handleMessage(message, newUser);
     });
   });
-}
+};
 
 // Create an event listener for messages
 client.on('message', message => {
   parseMessage(message);
+  lastMessage = message.content;
 });
 
 client.on('messageUpdate', (oldMessage, message) => {

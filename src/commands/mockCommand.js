@@ -1,5 +1,5 @@
 module.exports = {
-  run: (message, lastMessage) => {
+  run: (message, client, lastMessage) => {
     let mockString = '';
     let j = 1;
     for (var i = 0; i < lastMessage.length; i++) {
@@ -14,7 +14,8 @@ module.exports = {
       }
       j++;
     }
-    mockString += ' :SpongebobMock:';
+    const spongeMock = client.emojis.find('name', 'SpongebobMock');
+    mockString += ` ${spongeMock}`;
     message.channel.send(mockString);
   }
 };

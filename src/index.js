@@ -63,8 +63,10 @@ const handleMessage = (message, user) => {
     } else if (command === 'quell') {
       quellCommand.run(message);
     } else if (command === 'mock') {
-      mockCommand.run(message, lastMessage);
+      mockCommand.run(message, client, lastMessage);
     }
+  } else {
+    lastMessage = message.content;
   }
 };
 
@@ -98,7 +100,6 @@ const parseMessage = (message) => {
 // Create an event listener for messages
 client.on('message', message => {
   parseMessage(message);
-  lastMessage = message.content;
 });
 
 client.on('messageUpdate', (oldMessage, message) => {

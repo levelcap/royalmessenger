@@ -1,6 +1,14 @@
+const { getRandomFromArray } = require('../utils');
+const mockBackChance = '.1';
+
 module.exports = {
-  run: (message, client, lastMessage) => {
+  run: (message, client, lastMessage, user) => {
     const spongeMock = client.emojis.find('name', 'SpongebobMock');
+    if (Math.random() < mockBackChance) {
+      if (user.mocks) {
+        return message.channel.send(getRandomFromArray(user.mocks));
+      }
+    }
     if (!lastMessage) {
       return message.channel.send(`duurrr ${spongeMock}`);
     }

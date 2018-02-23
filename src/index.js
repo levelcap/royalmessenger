@@ -63,7 +63,7 @@ const handleMessage = (message, user) => {
     } else if (command === 'quell') {
       quellCommand.run(message);
     } else if (command === 'mock') {
-      mockCommand.run(message, client, lastMessages.get(message.channel.id));
+      mockCommand.run(message, client, lastMessages.get(message.channel.id), user);
     }
   } else {
     lastMessages.set(message.channel.id, message.content);

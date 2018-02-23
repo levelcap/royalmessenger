@@ -119,7 +119,7 @@ const questEmoji = (quest) => {
 
 module.exports = {
   beginQuest: (message, questNumber) => {
-    if (questNumber) {
+    if (!questNumber) {
       const quest = fetchRandomQuest().then((questResult) => {
         runQuest(message, questResult);
       });

@@ -6,7 +6,7 @@ module.exports = {
     const spongeMock = client.emojis.find('name', 'SpongebobMock');
     if (Math.random() < mockBackChance) {
       if (user.mocks) {
-        return message.channel.send(getRandomFromArray(user.mocks));
+        return message.channel.send(getRandomFromArray(user.mocks) + ` ${spongeMock}`);
       }
     }
     if (!lastMessage) {

@@ -6,9 +6,10 @@ const mongoServices = require('./mongoServices');
 const { each } = require('lodash');
 
 const fetchRandomQuest = () => {
+  const randomQuest = getRandomInt(2);
   return new Promise((resolve) => {
     const questsCollection = mongoServices.getDb().collection('quests');
-    questsCollection.findOne({ questId: 1, page: 1 }, (err, quest) => {
+    questsCollection.findOne({ questId: randomQuest, page: 1 }, (err, quest) => {
       const questEmbed = new Discord.RichEmbed({
         color: 25855,
         title: quest.title,

@@ -1,7 +1,7 @@
 module.exports = {
   run: (message, client, lastMessage) => {
     let mockString = '';
-    let j = 1;
+    let j = 0;
     for (var i = 0; i < lastMessage.length; i++) {
       const char = lastMessage.charAt(i);
       if (char === ' ') {

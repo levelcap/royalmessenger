@@ -1,5 +1,5 @@
 const { getRandomFromArray } = require('../utils');
-const mockBackChance = '.1';
+const mockBackChance = .2;
 
 module.exports = {
   run: (message, client, lastMessage, user) => {

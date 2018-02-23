@@ -12,7 +12,7 @@ const statusCommand = require('./commands/statusCommand');
 const helpCommand = require('./commands/helpCommand');
 const quellCommand = require('./commands/quellCommand');
 const mockCommand = require('./commands/mockCommand');
-let lastMessage = '';
+let lastMessages = new Map();
 
 // Create an instance of a Discord client
 const client = new Discord.Client();
@@ -63,10 +63,10 @@ const handleMessage = (message, user) => {
     } else if (command === 'quell') {
       quellCommand.run(message);
     } else if (command === 'mock') {
-      mockCommand.run(message, client, lastMessage);
+      mockCommand.run(message, client, lastMessages.get(message.channel.id));
     }
   } else {
-    lastMessage = message.content;
+    lastMessages.set(message.channel.id, message.content);
   }
 };
 

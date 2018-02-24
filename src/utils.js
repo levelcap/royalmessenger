@@ -1,6 +1,7 @@
 const _ = require('lodash');
 
 const KATE = '308403239538262028';
+const KINGDOM_COLERE_ID = 'colere';
 
 const titles = {
   '308403239538262028': {
@@ -145,12 +146,29 @@ const quellingMissions = [
   }
 ];
 
+const uprisingActivities = [
+  {
+    title: 'Merchant Caravan Attack',
+    description: 'The rebels have attacked a merchant caravan!',
+    attack: [1, 10],
+  },
+  {
+    title: 'Bank Heist',
+    description: 'The rebels have organized a bank heist!',
+    attack: [20, 100],
+  },
+];
+
 const getRandomFromArray = (arr) => {
   return arr[Math.floor(Math.random() * arr.length)];
 };
 
-const getRandomInt = (max) => {
-  return Math.floor(Math.random() * Math.floor(max)) + 1;
+const getRandomInt = (max, min) => {
+  if (!min) {
+    return Math.floor(Math.random() * Math.floor(max)) + 1;
+  } else {
+    return Math.floor(Math.random() * Math.floor(max - min)) + min + 1;
+  }
 };
 
 module.exports = {
@@ -169,7 +187,11 @@ module.exports = {
   getRandomQuellingQuest: () => {
     return getRandomFromArray(quellingMissions);
   },
+  getRandomUprisingActivity: () => {
+    return getRandomFromArray(uprisingActivities);
+  },
   getRandomFromArray,
   getRandomInt,
   KATE,
+  KINGDOM_COLERE_ID
 };

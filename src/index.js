@@ -1,7 +1,9 @@
 require('dotenv').config();
-const express = require('express')
+const express = require('express');
 const app = express();
 const Discord = require('discord.js');
+const { each, get } = require('lodash');
+const bodyParser = require('body-parser');
 const mongoServices = require('./services/mongoServices');
 const questCommand = require('./commands/questCommand');
 const killCommand = require('./commands/killCommand');
@@ -12,6 +14,9 @@ const statusCommand = require('./commands/statusCommand');
 const helpCommand = require('./commands/helpCommand');
 const quellCommand = require('./commands/quellCommand');
 const mockCommand = require('./commands/mockCommand');
+const treasuryCommand = require('./commands/treasuryCommand');
+const uprisingService = require('./services/uprisingService');
+const questService = require('./services/questServices');
 let lastMessages = new Map();
 
 // Create an instance of a Discord client
@@ -64,6 +69,8 @@ const handleMessage = (message, user) => {
       quellCommand.run(message);
     } else if (command === 'mock') {
       mockCommand.run(message, client, lastMessages.get(message.channel.id), user);
+    } else if (command === 'treasury') {
+      treasuryCommand.run(message, commandContent, user);
     }
   } else {
     lastMessages.set(message.channel.id, message.content);
@@ -121,7 +128,63 @@ mongoServices.connectDb((err) => {
   // Log our bot in
   client.login(token);
   app.use(express.static('public'));
-  app.get('/', (req, res) => res.send('<h1>This is nothing</h1>'));
+  app.use(bodyParser.json());
+  app.use(bodyParser.urlencoded({ extended: false }));
+  app.set('view engine', 'ejs');
+  app.set('views', `${__dirname}/views`);
+
+  app.get('/', (req, res) => {
+    res.send('<h1>Nothing!</h1>');
+  });
+
+  app.get('/quests', (req, res) => {
+    questService.questList().then((quests) => {
+      const locals = {
+        quests,
+        random: 'thisThing',
+      };
+      console.log(locals);
+      res.render('questList', locals);
+    });
+  });
+
+  app.get('/quests/:quest_id', (req, res) => {
+    const questId = get(req, 'params.quest_id');
+    questService.questList(questId).then((quests) => {
+      const locals = {
+        quests,
+        random: 'thisThing',
+      };
+      console.log(locals);
+      res.render('questList', locals);
+    });
+  });
+
+  app.post('/quests', (req, res) => {
+    console.log(req.body);
+  });
+
+  app.get('/quests/:quest_id/edit', (req, res) => {
+    const questId = get(req, 'params.quest_id');
+    const locals = {
+      questId,
+      random: 'thisThing',
+    };
+
+    res.render('questForm', locals);
+  });
+
   const port = process.env.PORT || 3000;
   app.listen(port, () => console.log(`RoyalMessengers listening on ${port}`))
+
+  setInterval(() => {
+    let selectedChannel;
+    each(client.channels.array(), (channel) => {
+      // console.log(`${channel.id} : ${channel.name}`);
+      if (channel.name === 'bot-commands') {
+        selectedChannel = channel;
+      }
+    });
+    uprisingService.uprisingActivity(selectedChannel);
+  }, 60000*5);
 });

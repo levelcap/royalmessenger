@@ -117,6 +117,22 @@ const questEmoji = (quest) => {
   return emojiArray;
 };
 
+const getQuests = (questId) => {
+  return new Promise((resolve) => {
+    const questsCollection = mongoServices.getDb().collection('quests');
+    if (questId) {
+      questsCollection.find({ questId: parseInt(questId) }).toArray((err, quests) => {
+        console.log(quests);
+        resolve(quests);
+      });
+    } else {
+      questsCollection.find({ page: 1 }).toArray((questErr, quests) => {
+        resolve(quests);
+      });
+    }
+  });
+};
+
 module.exports = {
   beginQuest: (message, questNumber) => {
     if (!questNumber) {
@@ -128,5 +144,8 @@ module.exports = {
         runQuest(message, questResult);
       });
     }
+  },
+  questList: (questId) => {
+    return getQuests(questId);
   },
 };

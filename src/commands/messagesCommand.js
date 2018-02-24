@@ -39,7 +39,6 @@ module.exports = {
             description: fullMessage,
           });
           const image = getRandomFromArray(images);
-          console.log(image);
           embed.setImage(`${process.env.BASE_URL}${image}`);
           toUser.send(embed);
 

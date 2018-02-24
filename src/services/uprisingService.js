@@ -1,7 +1,8 @@
-const { getRandomInt, getRandomQuellingQuest } = require('../utils');
+const { getRandomInt, getRandomQuellingQuest, getRandomUprisingActivity, KINGDOM_COLERE_ID } = require('../utils');
 const Chance = require('chance');
 const Discord = require('discord.js');
 const mongoServices = require('./mongoServices');
+const treasuryService = require('./treasuryService');
 const { each } = require('lodash');
 const UPRISING_CHANCE = 10;
 const returnOriginal = false;
@@ -272,6 +273,30 @@ module.exports = {
         return resolve(latestUprising.active);
       });
     })
+  },
+  uprisingActivity: (selectedChannel) => {
+    if (Math.random() < .1) {
+      fetchLatestUprising().then((uprising) => {
+        if (uprising.active) {
+          const activity = getRandomUprisingActivity();
+          const attackValue = getRandomInt(activity.attack[0], activity.attack[1]) * uprising.discontent;
+          const activityEmbed = new Discord.RichEmbed({
+            color: 14430740,
+            title: activity.title,
+            description: activity.description,
+            fields: [
+              {
+                name: 'Cost',
+                value: attackValue,
+              }
+            ]
+          });
+          treasuryService.rebelAttack(attackValue).then(() => {
+            selectedChannel.send(activityEmbed);
+          });
+        }
+      });
+    }
   },
   sendUprisingUpdate,
   sendUprisingBegins,

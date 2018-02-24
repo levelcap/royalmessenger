@@ -70,7 +70,7 @@ const handleMessage = (message, user) => {
     } else if (command === 'mock') {
       mockCommand.run(message, client, lastMessages.get(message.channel.id), user);
     } else if (command === 'treasury') {
-      treasuryCommand.run(message, commandContent, user);
+      // treasuryCommand.run(message, commandContent, user);
     }
   } else {
     lastMessages.set(message.channel.id, message.content);

@@ -8,12 +8,12 @@
 <body>
 <div class="container">
     <h1>Quest Pages</h1>
-    <h2>Quest (<%= quests[0].questId %>): <%= quests[0].title %></h2>
+    <h2>Quest (<%= questPages[0].questId %>): <%= questPages[0].title %></h2>
     <ul>
     <% for(var i = 0; i < questPages.length; i++) { %>
         <li>
-            Quest Description: <%= quests[i].description %>
-            Quest Page: <%= quests[i].page %>
+            Quest Description: <%= questPages[i].description %>
+            Quest Page: <%= questPages[i].page %>
         </li>
     <% } %>
     </ul>

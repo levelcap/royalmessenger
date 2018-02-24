@@ -18,9 +18,9 @@
                 <strong>This is an Ending</strong>
             <% } else { %>
                 <% for(var j = 0; j < questPages[i].fields.length; j++) { %>
-                    <strong>Option:</strong> <%= questPages[i].fields[j].namen %>  <br/>
-                    <strong>Option Description:</strong> <%= questPages[i].fields[j].valuen %>  <br/>
-                    <strong>Links to Page #:</strong> <%= questPages[i].fields[j].nextn %>  <br/>
+                    <strong>Option:</strong> <%= questPages[i].fields[j].name %>  <br/>
+                    <strong>Option Description:</strong> <%= questPages[i].fields[j].value %>  <br/>
+                    <strong>Links to Page #:</strong> <%= questPages[i].fields[j].next %>  <br/>
                 <% } %>
             <% } %>
         </li>

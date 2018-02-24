@@ -9,10 +9,11 @@
 <div class="container">
     <h1>Quest Pages</h1>
     <h2>Quest (<%= questPages[0].questId %>): <%= questPages[0].title %></h2>
+    <h3>(<a href="/quests/<%= questPages[0].questId %>/new">Add Page</a>)</h3>
     <ul>
     <% for(var i = 0; i < questPages.length; i++) { %>
         <li>
-            <strong>Page #:</strong> <%= questPages[i].page %> <br/>
+            <strong>Page #:</strong> <%= questPages[i].page %> (<a href="/quests/<%= questPages[i]._id %>/edit">Edit Page</a>)<br/>
             <strong>Page Description:</strong> <%= questPages[i].description %> <br/>
             <% if (questPages[i].endImage) { %>
                 <strong>This is an Ending</strong>

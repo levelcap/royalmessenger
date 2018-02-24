@@ -158,14 +158,34 @@ mongoServices.connectDb((err) => {
   });
 
   app.post('/quests', (req, res) => {
+    const questId = get(req, 'params.quest_id');
     console.log(req.body);
+    // questService.addQuestPage(req.body);
+    res.render('saveSuccess');
+  });
+
+  app.put('/quests/:quest_id', (req, res) => {
+    const questId = get(req, 'params.quest_id');
+    console.log(req.body);
+    // questService.editQuestPage(questId, req.body);
+    res.render('saveSuccess');
   });
 
   app.get('/quests/:quest_id/edit', (req, res) => {
     const questId = get(req, 'params.quest_id');
+    questService.questPage(questId).then((questPage) => {
+      const locals = {
+        questPage,
+      };
+
+      res.render('questForm', locals);
+    });
+  });
+
+  app.get('/quests/:quest_number/new', (req, res) => {
+    const questNumber = get(req, 'params.quest_number');
     const locals = {
       questId,
-      random: 'thisThing',
     };
 
     res.render('questForm', locals);

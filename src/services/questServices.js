@@ -133,6 +133,15 @@ const getQuests = (questId) => {
   });
 };
 
+const getQuestPage = (questPageId) => {
+  return new Promise((resolve) => {
+    const questsCollection = mongoServices.getDb().collection('quests');
+    questsCollection.findOne({ _id: questPageId }, (err, questPage) => {
+      resolve(questPage);
+    });
+  });
+};
+
 module.exports = {
   beginQuest: (message, questNumber) => {
     if (!questNumber) {
@@ -147,5 +156,8 @@ module.exports = {
   },
   questList: (questId) => {
     return getQuests(questId);
+  },
+  questPage: (questPageId) => {
+    return getQuestPage(questPageId);
   },
 };

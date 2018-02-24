@@ -13,7 +13,16 @@
     <% for(var i = 0; i < questPages.length; i++) { %>
         <li>
             <strong>Page #:</strong> <%= questPages[i].page %> <br/>
-            <strong>Page Description:</strong> <%= questPages[i].description %>
+            <strong>Page Description:</strong> <%= questPages[i].description %> <br/>
+            <% if (questPages[i].endImage) { %>
+                <strong>This is an Ending</strong>
+            <% } else { %>
+                <% for(var j = 0; i < questPages[i].fields; j++) { %>
+                    <strong>Option:</strong> questPages[i].fields[j].name <br/>
+                    <strong>Option Description:</strong> questPages[i].fields[j].value <br/>
+                    <strong>Links to Page #:</strong> questPages[i].fields[j].next <br/>
+                <% } %>
+            <% } %>
         </li>
         <br/>
     <% } %>

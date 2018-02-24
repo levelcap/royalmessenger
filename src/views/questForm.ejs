@@ -8,11 +8,31 @@
 <body>
 <div class="container">
     <form class="quest-form" action="/quest/<%= questId %>" method="POST">
-        <label for="name">Name
-            <small class="required">*required</small>
-        </label>
-        <input id="name" maxlength="80" name="name" size="20" type="text" placeholder="<%= questId %>" required />
-        <input type="submit" name="submit" value="Submit Support Request" />
+        <label for="name">Quest Number</label>
+        <input id="questId" maxlength="80" name="questId" size="100" type="text" /> <br/>
+
+        <label for="name">Quest Title</label>
+        <input id="title" maxlength="80" name="title" size="100" type="text" /> <br/>
+
+        <label for="name">Page Description</label>
+        <input id="description" name="description" size="100" type="text" /> <br/>
+
+        <div class="theBox">
+            <label for="name">End Image Url</label>
+            <input id="endImage" name="endImage" size="100" type="text" /> <br/>
+            <h3>OR!</h3>
+            <hr/>
+            <label for="name">Option 1 Emoji</label>
+            <input id="option1" name="option1" size="20" type="text" /> <br/>
+            <label for="name">Option 1 Page #</label>
+            <input id="option1Page" name="option1Page" size="20" type="text" /> <br/>
+            <label for="name">Option 2 Emoji</label>
+            <input id="option2" name="option2" size="20" type="text" /> <br/>
+            <label for="name">Option 2 Page #</label>
+            <input id="option2Page" name="option2Page" size="20" type="text" /> <br/>
+        </div>
+
+        <input type="submit" name="submit" value="Submit" />
     </form>
 </div>
 

@@ -3,5 +3,17 @@ body {
 }
 
 input {
-    display: block;
+    display: inline-block;
+    margin-bottom: 5px;
+}
+
+label {
+    display: inline-block;
+    width: 150px;
+}
+
+.theBox {
+    margin: 10px;
+    padding: 10px;
+    border: 1px solid #e0dad4;
 }

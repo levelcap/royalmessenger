@@ -12,9 +12,10 @@
     <ul>
     <% for(var i = 0; i < questPages.length; i++) { %>
         <li>
-            Quest Description: <%= questPages[i].description %>
-            Quest Page: <%= questPages[i].page %>
+            <strong>Page #:</strong> <%= questPages[i].page %> <br/>
+            <strong>Page Description:</strong> <%= questPages[i].description %>
         </li>
+        <br/>
     <% } %>
     </ul>
 </div>

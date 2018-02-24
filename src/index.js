@@ -97,6 +97,16 @@ const parseMessage = (message) => {
     const newUser = {
       _id: userId,
       name: username,
+      mod: false,
+      titles: {
+        ic: [ `Hear ye, hear ye, the character belong to ${username} has arrived.` ],
+        ooc: [ `Look its ${username}, everyone do the thing where they pretend to care.` ],
+      },
+      mocks: [ 'aDoOoOoOoOoY!' ],
+      wealth: {
+        debt: 0,
+        gold: 100,
+      },
     };
     users.insertOne(newUser, (err, result) => {
       return handleMessage(message, newUser);

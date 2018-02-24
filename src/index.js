@@ -185,7 +185,7 @@ mongoServices.connectDb((err) => {
   app.get('/quests/:quest_number/new', (req, res) => {
     const questNumber = get(req, 'params.quest_number');
     const locals = {
-      questId,
+      questNumber,
     };
 
     res.render('questForm', locals);

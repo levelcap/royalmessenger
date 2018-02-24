@@ -143,20 +143,17 @@ mongoServices.connectDb((err) => {
         quests,
         random: 'thisThing',
       };
-      console.log(locals);
       res.render('questList', locals);
     });
   });
 
   app.get('/quests/:quest_id', (req, res) => {
     const questId = get(req, 'params.quest_id');
-    questService.questList(questId).then((quests) => {
+    questService.questList(questId).then((questPages) => {
       const locals = {
-        quests,
-        random: 'thisThing',
+        questPages,
       };
-      console.log(locals);
-      res.render('questList', locals);
+      res.render('quest', locals);
     });
   });
 

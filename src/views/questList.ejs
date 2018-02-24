@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Quest Form for Royal Messengers</title>
+    <link href="/css/main.css" type="text/css" rel="stylesheet"/>
+</head>
+
+<body>
+<div class="container">
+    <h1>Quest List</h1>
+    <ul>
+    <% for(var i = 0; i < quests.length; i++) { %>
+        <li><a href="/quests/<%= quests[i].questId %>" ><%= quests[i].title %></a></li>
+    <% } %>
+    </ul>
+</div>
+
+<script>
+</script>
+</body>
+
+</html>

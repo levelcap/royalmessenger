@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Quest Form for Royal Messengers</title>
+    <link href="/css/main.css" type="text/css" rel="stylesheet"/>
+</head>
+
+<body>
+<div class="container">
+    <form class="quest-form" action="/quest/<%= questId %>" method="POST">
+        <label for="name">Name
+            <small class="required">*required</small>
+        </label>
+        <input id="name" maxlength="80" name="name" size="20" type="text" placeholder="<%= questId %>" required />
+        <input type="submit" name="submit" value="Submit Support Request" />
+    </form>
+</div>
+
+<script>
+</script>
+</body>
+
+</html>

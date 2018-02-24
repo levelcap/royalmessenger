@@ -121,7 +121,7 @@ const getQuests = (questId) => {
   return new Promise((resolve) => {
     const questsCollection = mongoServices.getDb().collection('quests');
     if (questId) {
-      questsCollection.find({ questId: parseInt(questId) }).toArray((err, quests) => {
+      questsCollection.find({ questId: parseInt(questId) }).sort({ page: 1}).toArray((err, quests) => {
         console.log(quests);
         resolve(quests);
       });

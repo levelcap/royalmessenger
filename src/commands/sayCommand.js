@@ -8,7 +8,9 @@ module.exports = {
       let toChannel;
       const toChannelName = commandContent.split(' ')[0];
       const text = commandContent.substr(commandContent.indexOf(' ') + 1);
-      each(client.channels.array(), (channel) => {
+      each(message.guild.channels.array(), (channel) => {
+        console.log('Guild channel');
+        console.log(channel);
         if (channel.name === toChannelName) {
           toChannel = channel;
         }
@@ -16,10 +18,10 @@ module.exports = {
       if (toChannel) {
         toChannel.send(text);
       } else {
-        message.channel.send('I am not familiar with that address.');
+        // message.channel.send('I am not familiar with that address.');
       }
     } else {
-      message.channel.send('I am not sure what you want me to do.');
+      // message.channel.send('I am not sure what you want me to do.');
     }
   }
 };

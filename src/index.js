@@ -15,6 +15,8 @@ const helpCommand = require('./commands/helpCommand');
 const quellCommand = require('./commands/quellCommand');
 const mockCommand = require('./commands/mockCommand');
 const treasuryCommand = require('./commands/treasuryCommand');
+const sayCommand = require('./commands/sayCommand');
+
 const uprisingService = require('./services/uprisingService');
 const questService = require('./services/questServices');
 let lastMessages = new Map();
@@ -71,6 +73,8 @@ const handleMessage = (message, user) => {
       mockCommand.run(message, client, lastMessages.get(message.channel.id), user);
     } else if (command === 'treasury') {
       // treasuryCommand.run(message, commandContent, user);
+    } else if (command === 'say') {
+      sayCommand.run(message, client, commandContent);
     }
   } else {
     lastMessages.set(message.channel.id, message.content);

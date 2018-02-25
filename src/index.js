@@ -167,20 +167,6 @@ mongoServices.connectDb((err) => {
     });
   });
 
-  app.post('/quests', (req, res) => {
-    const questId = get(req, 'params.quest_id');
-    console.log(req.body);
-    // questService.addQuestPage(req.body);
-    res.render('saveSuccess');
-  });
-
-  app.put('/quests/:quest_id', (req, res) => {
-    const questId = get(req, 'params.quest_id');
-    console.log(req.body);
-    // questService.editQuestPage(questId, req.body);
-    res.render('saveSuccess');
-  });
-
   app.get('/quests/:quest_id/edit', (req, res) => {
     const questId = get(req, 'params.quest_id');
     questService.questPage(questId).then((questPage) => {
@@ -188,7 +174,7 @@ mongoServices.connectDb((err) => {
         questPage,
       };
 
-      res.render('questForm', locals);
+      res.render('questEdit', locals);
     });
   });
 
@@ -200,6 +186,28 @@ mongoServices.connectDb((err) => {
 
     res.render('questForm', locals);
   });
+
+  app.post('/quests', (req, res) => {
+    const questId = get(req, 'params.quest_id');
+    const formBody = get(req, 'body');
+    if (formBody.password !== process.env.PASS) {
+      console.log('Bad password');
+      return res.render('saveFail');
+    }
+    questService.addQuestPage(req.body).then(() => {
+      return res.render('saveSuccess');
+    }).catch(() => {
+      return res.render('saveFail');
+    });
+  });
+
+  app.put('/quests/:quest_id', (req, res) => {
+    const questId = get(req, 'params.quest_id');
+    console.log(req.body);
+    // questService.editQuestPage(questId, req.body);
+    res.render('saveSuccess');
+  });
+
 
   const port = process.env.PORT || 3000;
   app.listen(port, () => console.log(`RoyalMessengers listening on ${port}`))

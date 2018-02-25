@@ -25,8 +25,8 @@ const quests = [
 
 module.exports = {
   run: (message, questNumber) => {
-    if (questNumber && parseInt(questNumber)) {
-      questServices.beginQuest(message, parseInt(questNumber));
+    if (questNumber && parseInt(questNumber, 10)) {
+      questServices.beginQuest(message, parseInt(questNumber, 10));
     } else {
       questServices.beginQuest(message)
     }

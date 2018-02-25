@@ -121,7 +121,7 @@ const getQuests = (questId) => {
   return new Promise((resolve) => {
     const questsCollection = mongoServices.getDb().collection('quests');
     if (questId) {
-      questsCollection.find({ questId: parseInt(questId) }).sort({ page: 1}).toArray((err, quests) => {
+      questsCollection.find({ questId: parseInt(questId, 10) }).sort({ page: 1 }).toArray((err, quests) => {
         console.log(quests);
         resolve(quests);
       });
@@ -159,5 +159,57 @@ module.exports = {
   },
   questPage: (questPageId) => {
     return getQuestPage(questPageId);
+  },
+  addQuestPage: (form) => {
+    return new Promise ((resolve, reject) => {
+      const questId = parseInt(form.questId, 10);
+      const title = form.title;
+      const description = form.description;
+      const page = parseInt(form.pageNumber, 10);
+      const endImage = form.endImage;
+      const option1 = form.option1;
+      const option1Page = parseInt(form.option1Page, 10);
+      const option1Text = form.option1Text;
+      const option2 = form.option2;
+      const option2Page = parseInt(form.option2Page, 10);
+      const option2Text = form.option2Text;
+
+      if (!questId || !page) {
+        console.log(form);
+        console.log('Could not resolve questId or pageNumber to an integer.');
+        return reject();
+      }
+
+      const questObj = {
+        questId,
+        page,
+        title,
+        description
+      };
+
+      if (endImage) {
+        questObj.endImage = endImage;
+      } else if (option1Page && option2Page) {
+        questObj.fields = [
+          {
+            name: `React with ${option1}`,
+            value: option1Text,
+            next: option1Page,
+          },
+          {
+            name: `React with ${option2}`,
+            value: option2Text,
+            next: option2Page,
+          }
+        ];
+      } else {
+        return reject();
+      }
+
+      const questsCollection = mongoServices.getDb().collection('quests');
+      questsCollection.insertOne(questObj, (err, saveRes) => {
+        return resolve();
+      });
+    });
   },
 };

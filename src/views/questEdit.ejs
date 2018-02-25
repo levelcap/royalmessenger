@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Quest Form for Royal Messengers</title>
+    <title>Quest Editing for Royal Messengers</title>
     <link href="/css/main.css" type="text/css" rel="stylesheet"/>
 </head>
 
@@ -9,7 +9,7 @@
 <h3><a href="/quests">Home</a></h3>
 <div class="container">
     <h2><a href="https://getemoji.com/" target="_blank">Helpful Link for Emoji Copying</a></h2>
-    <form class="quest-form" action="/quests" method="POST">
+    <form class="quest-form" action="/quests" method="PUT">
         <label for="name">Password</label>
         <input id="password" maxlength="80" name="password" size="100" type="text" /> <br/>
 
@@ -21,9 +21,6 @@
 
         <label for="name">Page Description</label>
         <input id="description" name="description" size="100" type="text" /> <br/>
-
-        <label for="name">Page Number</label>
-        <input id="pageNumber" maxlength="80" name="pageNumber" size="100" type="text" /> <br/>
 
         <div class="theBox">
             <label for="name">End Image Url</label>

@@ -9,8 +9,6 @@ module.exports = {
       const toChannelName = commandContent.split(' ')[0];
       const text = commandContent.substr(commandContent.indexOf(' ') + 1);
       each(message.guild.channels.array(), (channel) => {
-        console.log('Guild channel');
-        console.log(channel);
         if (channel.name === toChannelName) {
           toChannel = channel;
         }

@@ -157,6 +157,21 @@ const uprisingActivities = [
     description: 'The rebels have organized a bank heist!',
     attack: [20, 100],
   },
+  {
+    title: 'Feast Crashers',
+    description: 'The rebels have crashed a feast, making off with all your delicious food!',
+    attack: [1, 5],
+  },
+  {
+    title: 'Not the Lilypad!',
+    description: 'The rebels have robbed a local den of ill repute!  This is getting out of hand.',
+    attack: [3, 15],
+  },
+  {
+    title: 'Weapons Warehouse',
+    description: 'The rebels found that place where you keep all the crossbows. They took them. That\'s probably not great.',
+    attack: [5, 25],
+  },
 ];
 
 const getRandomFromArray = (arr) => {

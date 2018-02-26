@@ -3,25 +3,28 @@ const Chance = require('chance');
 const Discord = require('discord.js');
 const emoji = require('node-emoji');
 const mongoServices = require('./mongoServices');
-const { each } = require('lodash');
+const { each, map } = require('lodash');
 
 const fetchRandomQuest = () => {
-  const randomQuest = getRandomInt(2);
   return new Promise((resolve) => {
     const questsCollection = mongoServices.getDb().collection('quests');
-    questsCollection.findOne({ questId: randomQuest, page: 1 }, (err, quest) => {
-      const questEmbed = new Discord.RichEmbed({
-        color: 25855,
-        title: quest.title,
-        description: quest.description,
-        fields: quest.fields,
-      });
+    questsCollection.find({ page: 1 }, { questId: 1 }).toArray((questFindErr, questIdResults) => {
+      const questIds = map(questIdResults, (questIdResult) => questIdResult.questId);
+      const randomQuest = getRandomFromArray(questIds);
+      questsCollection.findOne({ questId: randomQuest, page: 1 }, (err, quest) => {
+        const questEmbed = new Discord.RichEmbed({
+          color: 25855,
+          title: quest.title,
+          description: quest.description,
+          fields: quest.fields,
+        });
 
-      const result = {
-        embed: questEmbed,
-        details: quest,
-      };
-      resolve(result);
+        const result = {
+          embed: questEmbed,
+          details: quest,
+        };
+        resolve(result);
+      });
     });
   });
 };

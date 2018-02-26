@@ -65,8 +65,14 @@ const getKillRank = (killCount) => {
     return 'blood-drenched monster';
   } else if (killCount < 1000) {
     return 'unholy tyrant';
-  } else {
+  } else if (killCount < 2500) {
     return 'insane god of slaughter';
+  } else if (killCount < 5000) {
+    return 'walking extinction-level event';
+  } else if (killCount < 10000) {
+    return 'supernova of carnage';
+  } else {
+    return 'annihilation wave running rampant through a once life-filled universe. Seriously what is wrong with you?';
   }
 };
 
@@ -161,20 +167,20 @@ module.exports = {
           premurderUprising = active;
           return premurderUprising;
         }).then(() => {
-          return uprisingService.fomentDiscontent(1);
-        }).then(() => {
-          if (premurderUprising) {
-            uprisingService.fomentDiscontent(5).then(() => {
-              uprisingService.sendUprisingUpdate(message, 'The heinous killing of yet another Royal Messenger fans the flames of rebellion!');
-            });
-          } else {
-            uprisingService.isUprisingActive().then((active) => {
-              if (active) {
-                uprisingService.sendUprisingBegins(message, `Oh no! Your callous murder of Messengers has stirred the angry hearts of the downtrodden to rise against the royals!`);
-              }
-            });
-          }
-        })
+        return uprisingService.fomentDiscontent(1);
+      }).then(() => {
+        if (premurderUprising) {
+          uprisingService.fomentDiscontent(5).then(() => {
+            uprisingService.sendUprisingUpdate(message, 'The heinous killing of yet another Royal Messenger fans the flames of rebellion!');
+          });
+        } else {
+          uprisingService.isUprisingActive().then((active) => {
+            if (active) {
+              uprisingService.sendUprisingBegins(message, `Oh no! Your callous murder of Messengers has stirred the angry hearts of the downtrodden to rise against the royals!`);
+            }
+          });
+        }
+      })
         .catch((err) => {
           console.log('Something went wrong!');
           console.log(err);

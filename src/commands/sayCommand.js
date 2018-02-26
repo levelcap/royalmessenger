@@ -16,10 +16,10 @@ module.exports = {
       if (toChannel) {
         toChannel.send(text);
       } else {
-        // message.channel.send('I am not familiar with that address.');
+        message.channel.send('I am not familiar with that address.');
       }
     } else {
-      // message.channel.send('I am not sure what you want me to do.');
+      message.channel.send('I am not sure what you want me to do.');
     }
   }
 };

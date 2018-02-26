@@ -30,21 +30,25 @@ const fetchRandomQuest = () => {
 };
 
 const fetchQuestPage = (questId, page) => {
-  return new Promise((resolve) => {
+  return new Promise((resolve, reject) => {
     const questsCollection = mongoServices.getDb().collection('quests');
     questsCollection.findOne({ questId, page }, (err, quest) => {
-      const questEmbed = new Discord.RichEmbed({
-        color: 25855,
-        title: quest.title,
-        description: quest.description,
-        fields: quest.fields,
-      });
+      if (quest) {
+        const questEmbed = new Discord.RichEmbed({
+          color: 25855,
+          title: quest.title,
+          description: quest.description,
+          fields: quest.fields,
+        });
 
-      const result = {
-        embed: questEmbed,
-        details: quest,
-      };
-      resolve(result);
+        const result = {
+          embed: questEmbed,
+          details: quest,
+        };
+        resolve(result);
+      } else {
+        reject();
+      }
     });
   });
 };
@@ -102,6 +106,8 @@ const runQuest = (message, questResult) => {
       }
       fetchQuestPage(questResult.details.questId, questResult.details.fields[index].next).then((nextQuestPage) => {
         runQuest(message, nextQuestPage);
+      }).catch(() => {
+        message.channel.send('Some lazy admin hasnt done this bit of quest yet, what a jerk.');
       });
     });
   });

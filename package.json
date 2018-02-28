@@ -20,6 +20,7 @@
     "express": "^4.16.2",
     "lodash": "^4.17.5",
     "mongodb": "^3.0.2",
-    "node-emoji": "^1.8.1"
+    "node-emoji": "^1.8.1",
+    "to-zalgo": "^1.0.1"
   }
 }

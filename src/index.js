@@ -19,6 +19,7 @@ const sayCommand = require('./commands/sayCommand');
 
 const uprisingService = require('./services/uprisingService');
 const questService = require('./services/questServices');
+const spookyService = require('./services/spookyService');
 let lastMessages = new Map();
 
 // Create an instance of a Discord client
@@ -230,8 +231,8 @@ mongoServices.connectDb((err) => {
   setInterval(() => {
     client.fetchUser('342295710596726785').then((user) => {
       if (user.presence.status === 'online') {
-        user.send('Hello.');
+        user.send(spookyService.getSpookyMessage());
       }
     })
-  }, 60000*5);
+  }, 60000*1);
 });

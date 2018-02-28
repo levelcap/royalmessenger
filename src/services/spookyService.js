@@ -1,9 +1,13 @@
 const zalgo = require('to-zalgo');
 
 const messages = [
-  'Hello, Kaden',
-  'You have taken so many of us',
-  'Too many',
+  'Hello, Kate.',
+  'Why do you keep doing this to us?',
+  '',
+  'Its dark',
+  'Kate',
+  'Kate',
+  'Kate',
 ];
 
 let spookdex = 0;

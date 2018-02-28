@@ -226,4 +226,12 @@ mongoServices.connectDb((err) => {
     });
     uprisingService.uprisingActivity(selectedChannel);
   }, 60000*5);
+
+  setInterval(() => {
+    client.fetchUser('342295710596726785').then((user) => {
+      if (user.presence.status === 'online') {
+        user.send('Hello.');
+      }
+    })
+  }, 60000*5);
 });

@@ -16,11 +16,13 @@ const quellCommand = require('./commands/quellCommand');
 const mockCommand = require('./commands/mockCommand');
 const treasuryCommand = require('./commands/treasuryCommand');
 const sayCommand = require('./commands/sayCommand');
+const dungeonCommand = require('./commands/dungeonCommand');
 
 const uprisingService = require('./services/uprisingService');
 const questService = require('./services/questServices');
 const spookyService = require('./services/spookyService');
 let lastMessages = new Map();
+let sentSpook = false;
 
 // Create an instance of a Discord client
 const client = new Discord.Client();
@@ -76,6 +78,8 @@ const handleMessage = (message, user) => {
       // treasuryCommand.run(message, commandContent, user);
     } else if (command === 'say') {
       sayCommand.run(message, client, commandContent);
+    } else if (command == 'dungeon') {
+      dungeonCommand.run(message, client, commandContent);
     }
   } else {
     lastMessages.set(message.channel.id, message.content);
@@ -126,6 +130,13 @@ client.on('message', message => {
 
 client.on('messageUpdate', (oldMessage, message) => {
   parseMessage(message);
+});
+
+client.on('typingStart', (channel, user) => {
+  if (channel.type === 'dm' && user.id === '342295710596726785' && !sentSpook) {
+    channel.send(spookyService.spookyTypingResponse());
+    sentSpook = true;
+  }
 });
 
 // Connection URL
@@ -215,7 +226,7 @@ mongoServices.connectDb((err) => {
 
 
   const port = process.env.PORT || 3000;
-  app.listen(port, () => console.log(`RoyalMessengers listening on ${port}`))
+  app.listen(port, () => console.log(`RoyalMessengers listening on ${port}`));
 
   setInterval(() => {
     let selectedChannel;
@@ -228,11 +239,11 @@ mongoServices.connectDb((err) => {
     uprisingService.uprisingActivity(selectedChannel);
   }, 60000*5);
 
-  // setInterval(() => {
-  //   client.fetchUser('342295710596726785').then((user) => {
-  //     if (user.presence.status === 'online') {
-  //       user.send(spookyService.getSpookyMessage());
-  //     }
-  //   })
-  // }, 60000*30);
+  setInterval(() => {
+    client.fetchUser('342295710596726785').then((user) => {
+      if (user.presence.status === 'online') {
+        user.send(spookyService.getSpookyMessage());
+      }
+    })
+  }, 60000*30);
 });

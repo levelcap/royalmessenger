@@ -2,7 +2,7 @@ const zalgo = require('to-zalgo');
 
 const messages = [
   'Hello, Kate.',
-  'Why do you keep doing this to us?',
+  'You have sent so many of us to the grave',
   '',
   'Its dark',
   'Kate',
@@ -18,4 +18,7 @@ module.exports = {
     spookdex++;
     return zalgo(currentSpook);
   },
+  spookyTypingResponse: () => {
+    return zalgo('Oh there you are');
+  }
 };

@@ -237,6 +237,16 @@ mongoServices.connectDb((err) => {
 
   const port = process.env.PORT || 3000;
   app.listen(port, () => console.log(`RoyalMessengers listening on ${port}`));
+  
+  setInterval(() => {
+    let selectedChannel;
+    each(client.channels.array(), (channel) => {
+      if (channel.name === 'bot-shit') {
+        selectedChannel = channel;
+      }
+    });
+    selectedChannel.send("!d bump");
+  }, 60000*30);
 
   // setInterval(() => {
   //   let selectedChannel;

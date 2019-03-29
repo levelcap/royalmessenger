@@ -37,25 +37,35 @@ client.on('ready', () => {
 });
 
 const handleMessage = (message, user) => {
-  if (message.content.includes('/rm')) {
-    const content = message.content;
-    // Send "pong" to the same channel
-    const commandPieces = content.split(' ');
-    const commandString = content.substr(content.indexOf(' ') + 1);
-    let command = '';
-    let commandContent = '';
+  const content = message.content;
+  const commandPieces = content.split(' ');
+  const commandString = content.substr(content.indexOf(' ') + 1);
+  let command = '';
+  let commandContent = '';
 
-    if (commandPieces.length <= 1) {
-      console.log('Nothing to do.');
-      return;
-    }
-    if (commandPieces.length > 2) {
-      command = commandString.substr(0, commandString.indexOf(' ')).toLowerCase();
-      commandContent = commandString.substr(commandString.indexOf(' ') + 1);
-    } else {
-      command = commandString.toLowerCase();
-    }
+  if (commandPieces.length <= 1) {
+    console.log('Blank command, nothing to do.');
+    return;
+  }
 
+  if (commandPieces.length > 2) {
+    command = commandString.substr(0, commandString.indexOf(' ')).toLowerCase();
+    commandContent = commandString.substr(commandString.indexOf(' ') + 1);
+  } else {
+    command = commandString.toLowerCase();
+  }
+
+  if (content.includes('/na')) {
+    if (command === 'roll') {
+      d20 = Math.floor(Math.random() * Math.floor(19)) + 1;
+      message.channel.send(`**${user.name}**, rolls a **${d20}**.`);
+    } else if (command === 'weather') {
+      message.channel.send(`Tamara Frey of WNAR says today will be chilly and overcast with a chance of rain.`);
+    }
+  }
+
+  if (content.includes('/rm')) {
+    return;
     if (command === 'messages' || command === 'message') {
       messagesCommand.run(message, client, user, commandContent);
     } else if (command === 'status') {
@@ -132,12 +142,12 @@ client.on('messageUpdate', (oldMessage, message) => {
   parseMessage(message);
 });
 
-client.on('typingStart', (channel, user) => {
-  if (channel.type === 'dm' && user.id === '342295710596726785' && !sentSpook) {
-    channel.send(spookyService.spookyTypingResponse());
-    sentSpook = true;
-  }
-});
+// client.on('typingStart', (channel, user) => {
+//   if (channel.type === 'dm' && user.id === '342295710596726785' && !sentSpook) {
+//     channel.send(spookyService.spookyTypingResponse());
+//     sentSpook = true;
+//   }
+// });
 
 // Connection URL
 const url = process.env.MONGODB_URI;
@@ -228,22 +238,21 @@ mongoServices.connectDb((err) => {
   const port = process.env.PORT || 3000;
   app.listen(port, () => console.log(`RoyalMessengers listening on ${port}`));
 
-  setInterval(() => {
-    let selectedChannel;
-    each(client.channels.array(), (channel) => {
-      // console.log(`${channel.id} : ${channel.name}`);
-      if (channel.name === 'bot-commands') {
-        selectedChannel = channel;
-      }
-    });
-    uprisingService.uprisingActivity(selectedChannel);
-  }, 60000*5);
+  // setInterval(() => {
+  //   let selectedChannel;
+  //   each(client.channels.array(), (channel) => {
+  //     if (channel.name === 'bot-commands') {
+  //       selectedChannel = channel;
+  //     }
+  //   });
+  //   uprisingService.uprisingActivity(selectedChannel);
+  // }, 60000*5);
 
-  setInterval(() => {
-    client.fetchUser('342295710596726785').then((user) => {
-      if (user.presence.status === 'online') {
-        user.send(spookyService.getSpookyMessage());
-      }
-    })
-  }, 60000*30);
+  // setInterval(() => {
+  //   client.fetchUser('342295710596726785').then((user) => {
+  //     if (user.presence.status === 'online') {
+  //       user.send(spookyService.getSpookyMessage());
+  //     }
+  //   })
+  // }, 60000*30);
 });

@@ -148,7 +148,7 @@ client.on('guildMemberAdd', member => {
 })
 
 client.on('guildMemberRemove', member => {
-  const message = `_${member} has left New Arcadia and will be immediately forgotten forever who are we even talking about?`
+  const message = `_${member} has left New Arcadia and will be immediately forgotten forever who are we even talking about?_`
   member.guild.channels.get('561202141847355393').send(message); 
 })
 

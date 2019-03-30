@@ -61,6 +61,9 @@ const handleMessage = (message, user) => {
       message.channel.send(`**${user.name}**, rolls a **${d20}**.`);
     } else if (command === 'weather') {
       message.channel.send(`Tamara Frey of WNAR says today will be chilly and overcast with a chance of rain.`);
+    } else if (command === 'welcome') {
+      tag = user.tag
+      message.guild.channels.get('561202141847355393').send(`Welcome to New Arcadia ${tag}`); 
     }
   }
 
@@ -141,6 +144,11 @@ client.on('message', message => {
 client.on('messageUpdate', (oldMessage, message) => {
   parseMessage(message);
 });
+
+client.on('guildMemberAdd', member => {
+  tag = member.user.tag
+  member.guild.channels.get('561202141847355393').send(`Welcome to New Arcadia ${tag}`); 
+})
 
 // client.on('typingStart', (channel, user) => {
 //   if (channel.type === 'dm' && user.id === '342295710596726785' && !sentSpook) {

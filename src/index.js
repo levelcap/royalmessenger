@@ -62,8 +62,8 @@ const handleMessage = (message, user) => {
     } else if (command === 'weather') {
       message.channel.send(`Tamara Frey of WNAR says today will be chilly and overcast with a chance of rain.`);
     } else if (command === 'welcome') {
-      tag = user.username
-      message.guild.channels.get('561202141847355393').send(`Welcome to New Arcadia @${tag}`); 
+      console.log(user)
+      message.guild.channels.get('561202141847355393').send(`Welcome to New Arcadia @${user}`); 
     }
   }
 

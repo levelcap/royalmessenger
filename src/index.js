@@ -144,12 +144,12 @@ client.on('messageUpdate', (oldMessage, message) => {
 
 client.on('guildMemberAdd', member => {
   const message = `_Welcome to New Arcadia, ${member}! Have a look around, feel free to just jump into making a character and playing, or let us know if you have any questions._`
-  member.guild.channels.get('561202141847355393').send(); 
+  member.guild.channels.get('561202141847355393').send(message); 
 })
 
 client.on('guildMemberRemove', member => {
   const message = `_${member} has left New Arcadia and will be immediately forgotten forever who are we even talking about?`
-  member.guild.channels.get('561202141847355393').send(); 
+  member.guild.channels.get('561202141847355393').send(message); 
 })
 
 // Connection URL

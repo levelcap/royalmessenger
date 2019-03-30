@@ -147,12 +147,10 @@ client.on('guildMemberAdd', member => {
   member.guild.channels.get('561202141847355393').send(); 
 })
 
-// client.on('typingStart', (channel, user) => {
-//   if (channel.type === 'dm' && user.id === '342295710596726785' && !sentSpook) {
-//     channel.send(spookyService.spookyTypingResponse());
-//     sentSpook = true;
-//   }
-// });
+client.on('guildMemberRemove', member => {
+  const message = `_${member} has left New Arcadia and will be immediately forgotten forever who are we even talking about?`
+  member.guild.channels.get('561202141847355393').send(); 
+})
 
 // Connection URL
 const url = process.env.MONGODB_URI;

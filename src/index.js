@@ -61,8 +61,6 @@ const handleMessage = (message, user) => {
       message.channel.send(`**${user.name}**, rolls a **${d20}**.`);
     } else if (command === 'weather') {
       message.channel.send(`Tamara Frey of WNAR says today will be chilly and overcast with a chance of rain.`);
-    } else if (command === 'welcome') {
-      message.guild.channels.get('561202141847355393').send(`Welcome to New Arcadia @${user.name}`); 
     }
   }
 
@@ -145,7 +143,8 @@ client.on('messageUpdate', (oldMessage, message) => {
 });
 
 client.on('guildMemberAdd', member => {
-  member.guild.channels.get('561202141847355393').send(`Welcome to New Arcadia ${member}`); 
+  const message = `_Welcome to New Arcadia, ${member}! Have a look around, feel free to just jump into making a character and playing, or let us know if you have any questions._`
+  member.guild.channels.get('561202141847355393').send(); 
 })
 
 // client.on('typingStart', (channel, user) => {

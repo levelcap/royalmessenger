@@ -128,6 +128,7 @@ const parseMessage = (message) => {
     }
     const newUser = {
       _id: userId,
+      username: username,
       posts: 0,
     };
     users.insertOne(newUser, (err, result) => {

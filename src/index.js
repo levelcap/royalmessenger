@@ -51,7 +51,7 @@ const handleMessage = (message, user) => {
   if (content.includes('/na')) {
     if (command === 'roll') {
       d20 = Math.floor(Math.random() * Math.floor(19)) + 1;
-      message.channel.send(`**${user.name}**, rolls a **${d20}**.`);
+      message.channel.send(`**${message.author}**, rolls a **${d20}**.`);
     } else if (command === 'weather') {
       message.channel.send(`Tamara Frey of WNAR says today will be chilly and overcast with a chance of rain.`);
     }
@@ -97,7 +97,7 @@ const parseMessage = (message) => {
   }
 
   const db = mongoServices.getDb();
-  const users = db.collection('users');
+  const users = db.collection('na-users');
 
   // If the message is "ping"
   const userId = message.author.id;
@@ -112,17 +112,7 @@ const parseMessage = (message) => {
     }
     const newUser = {
       _id: userId,
-      name: username,
-      mod: false,
-      titles: {
-        ic: [ `Hear ye, hear ye, the character belong to ${username} has arrived.` ],
-        ooc: [ `Look its ${username}, everyone do the thing where they pretend to care.` ],
-      },
-      mocks: [ 'aDoOoOoOoOoY!' ],
-      wealth: {
-        debt: 0,
-        gold: 100,
-      },
+      posts: 0,
     };
     users.insertOne(newUser, (err, result) => {
       return handleMessage(message, newUser);

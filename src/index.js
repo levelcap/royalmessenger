@@ -43,7 +43,7 @@ const handleMessage = (message, user) => {
   // Increment IC messages count
   if (message.channel.id === ROLEPLAY_CHANNEL) {
     const userCollection = mongoServices.getDb().collection('users');
-    userCollection.findOneAndUpdate({ _id: user._id }, { $inc: { 'posts': 1 } }, { returnOriginal }, (err, updatedUser) => {
+    userCollection.findOneAndUpdate({ _id: user._id }, { $inc: { 'posts': 1 } }, (err, updatedUser) => {
       console.log(err);
       console.log(updatedUser);
     });

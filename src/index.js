@@ -97,7 +97,7 @@ const parseMessage = (message) => {
   }
 
   const db = mongoServices.getDb();
-  const users = db.collection('na-users');
+  const users = db.collection('na_users');
 
   // If the message is "ping"
   const userId = message.author.id;

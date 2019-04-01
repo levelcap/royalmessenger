@@ -17,7 +17,6 @@ const mockCommand = require('./commands/mockCommand');
 const treasuryCommand = require('./commands/treasuryCommand');
 const sayCommand = require('./commands/sayCommand');
 const dungeonCommand = require('./commands/dungeonCommand');
-const npcCommand = require('./commands/npcCommand');
 
 const uprisingService = require('./services/uprisingService');
 const questService = require('./services/questServices');
@@ -39,7 +38,6 @@ const handleMessage = (message, user) => {
   let commandContent = '';
 
   if (commandPieces.length <= 1) {
-    console.log('Blank command, nothing to do.');
     return;
   }
 

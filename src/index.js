@@ -26,11 +26,28 @@ let sentSpook = false;
 
 const client = new Discord.Client();
 const token = process.env.DISCORD_TOKEN;
+
+// Channels
+const ROLEPLAY_CHANNEL = '561259155365560360'
+const TINY_SHOES_CHANNEL = '562116703312674817'
+const OOC_CHANNEL = '561202141847355393'
+
+// Emotes
+const MERCER_SHOE = '562116703312674817'
+
 client.on('ready', () => {
   console.log('I am ready!');
 });
 
 const handleMessage = (message, user) => {
+  // Increment IC messages count
+  if (message.channel.id === ROLEPLAY_CHANNEL) {
+    const userCollection = mongoServices.getDb().collection('users');
+    userCollection.findOneAndUpdate({ _id: user._id }, { $inc: { 'posts': 1 } }, { returnOriginal }, (err, updatedUser) => {
+      console.log(err);
+      console.log(updatedUser);
+    });
+  }
   const content = message.content;
   const commandPieces = content.split(' ');
   const commandString = content.substr(content.indexOf(' ') + 1);
@@ -92,14 +109,13 @@ const handleMessage = (message, user) => {
 const parseMessage = (message) => {
   if (message.author.bot) return;
 
-  if (message.channel.id === '562119245425672222') {
-    message.react(message.guild.emojis.get('562116703312674817')).then(console.log).catch(console.error);
+  if (message.channel.id === TINY_SHOES_CHANNEL) {
+    message.react(message.guild.emojis.get(MERCER_SHOE)).then(console.log).catch(console.error);
   }
 
   const db = mongoServices.getDb();
   const users = db.collection('na_users');
 
-  // If the message is "ping"
   const userId = message.author.id;
   const username = message.author.username;
   if (process.env.LOG_NAMES === 'true') {
@@ -131,12 +147,12 @@ client.on('messageUpdate', (oldMessage, message) => {
 
 client.on('guildMemberAdd', member => {
   const message = `_Welcome to New Arcadia, ${member}! Have a look around, feel free to just jump into making a character and playing, or let us know if you have any questions._`
-  member.guild.channels.get('561202141847355393').send(message); 
+  member.guild.channels.get(OOC_CHANNEL).send(message); 
 })
 
 client.on('guildMemberRemove', member => {
   const message = `_${member} has left New Arcadia and will be immediately forgotten forever who are we even talking about?_`
-  member.guild.channels.get('561202141847355393').send(message); 
+  member.guild.channels.get(OOC_CHANNEL).send(message); 
 })
 
 // Connection URL

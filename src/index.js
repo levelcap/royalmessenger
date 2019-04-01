@@ -42,14 +42,11 @@ client.on('ready', () => {
   console.log('I am ready!');
 });
 
-const handleMessage = (message, user) => {
+const handleMessage = (message, user, update = false) => {
   // Increment IC messages count
-  if (message.channel.id === ROLEPLAY_CHANNEL) {
+  if (message.channel.id === ROLEPLAY_CHANNEL && !update) {
     const userCollection = mongoServices.getDb().collection(USERS);
-    userCollection.findOneAndUpdate({ _id: user._id }, { $inc: { 'posts': 1 } }, (err, updatedUser) => {
-      console.log(err);
-      console.log(updatedUser);
-    });
+    userCollection.findOneAndUpdate({ _id: user._id }, { $inc: { 'posts': 1 } }, () => {});
   }
   const content = message.content;
   const commandPieces = content.split(' ');
@@ -109,7 +106,7 @@ const handleMessage = (message, user) => {
   }
 };
 
-const parseMessage = (message) => {
+const parseMessage = (message, update = false) => {
   if (message.author.bot) return;
 
   if (message.channel.id === TINY_SHOES_CHANNEL) {
@@ -134,18 +131,18 @@ const parseMessage = (message) => {
       posts: 0,
     };
     users.insertOne(newUser, (err, result) => {
-      return handleMessage(message, newUser);
+      return handleMessage(message, newUser, update);
     });
   });
 };
 
 // Create an event listener for messages
 client.on('message', message => {
-  parseMessage(message);
+  parseMessage(message, false);
 });
 
 client.on('messageUpdate', (oldMessage, message) => {
-  parseMessage(message);
+  parseMessage(message, true);
 });
 
 client.on('guildMemberAdd', member => {
@@ -155,7 +152,9 @@ client.on('guildMemberAdd', member => {
 
 client.on('guildMemberRemove', member => {
   const message = `_${member} has left New Arcadia and will be immediately forgotten forever who are we even talking about?_`
-  member.guild.channels.get(OOC_CHANNEL).send(message); 
+  member.guild.channels.get(OOC_CHANNEL).send(message);
+  const users = mongoServices.getDb().collection(USERS);
+  users.deleteOne({ id: member.user.id }).then(() => {});
 })
 
 // Connection URL

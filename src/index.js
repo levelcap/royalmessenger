@@ -35,6 +35,9 @@ const OOC_CHANNEL = '561202141847355393'
 // Emotes
 const MERCER_SHOE = '562116703312674817'
 
+//collections
+USERS = 'na_users'
+
 client.on('ready', () => {
   console.log('I am ready!');
 });
@@ -42,7 +45,7 @@ client.on('ready', () => {
 const handleMessage = (message, user) => {
   // Increment IC messages count
   if (message.channel.id === ROLEPLAY_CHANNEL) {
-    const userCollection = mongoServices.getDb().collection('users');
+    const userCollection = mongoServices.getDb().collection(USERS);
     userCollection.findOneAndUpdate({ _id: user._id }, { $inc: { 'posts': 1 } }, (err, updatedUser) => {
       console.log(err);
       console.log(updatedUser);
@@ -113,8 +116,7 @@ const parseMessage = (message) => {
     message.react(message.guild.emojis.get(MERCER_SHOE)).then(console.log).catch(console.error);
   }
 
-  const db = mongoServices.getDb();
-  const users = db.collection('na_users');
+  const users = mongoServices.getDb().collection(USERS);
 
   const userId = message.author.id;
   const username = message.author.username;

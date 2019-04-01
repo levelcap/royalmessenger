@@ -17,6 +17,7 @@ const mockCommand = require('./commands/mockCommand');
 const treasuryCommand = require('./commands/treasuryCommand');
 const sayCommand = require('./commands/sayCommand');
 const dungeonCommand = require('./commands/dungeonCommand');
+const npcCommand = require('./commands/npcCommand');
 
 const uprisingService = require('./services/uprisingService');
 const questService = require('./services/questServices');
@@ -24,14 +25,8 @@ const spookyService = require('./services/spookyService');
 let lastMessages = new Map();
 let sentSpook = false;
 
-// Create an instance of a Discord client
 const client = new Discord.Client();
-
-// The token of your bot - https://discordapp.com/developers/applications/me
 const token = process.env.DISCORD_TOKEN;
-
-// The ready event is vital, it means that your bot will only start reacting to information
-// from Discord _after_ ready is emitted
 client.on('ready', () => {
   console.log('I am ready!');
 });
@@ -98,6 +93,10 @@ const handleMessage = (message, user) => {
 
 const parseMessage = (message) => {
   if (message.author.bot) return;
+
+  if (message.channel.id === 562119245425672222) {
+    message.react(':mercer');
+  }
 
   const db = mongoServices.getDb();
   const users = db.collection('users');

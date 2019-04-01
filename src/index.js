@@ -92,7 +92,7 @@ const handleMessage = (message, user) => {
 const parseMessage = (message) => {
   if (message.author.bot) return;
 
-  if (message.channel.id === 562119245425672222) {
+  if (message.channel.id === '562119245425672222') {
     message.react(message.guild.emojis.get('562116703312674817')).then(console.log).catch(console.error);
   }
 

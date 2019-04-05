@@ -118,7 +118,7 @@ const parseMessage = (message, update = false) => {
   if (message.channel.id === MULTI_LINE_CHANNEL) {
     if (message.content.length < 200) {
       sendContent = message.content
-      message.user.send("Too short for #multi-line-rp:" + sendContent);
+      message.author.send("Too short for #multi-line-rp:" + sendContent);
       message.delete().then().catch((err)=> { console.log(err)});
     }
     return;

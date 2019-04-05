@@ -31,6 +31,7 @@ const token = process.env.DISCORD_TOKEN;
 const ROLEPLAY_CHANNEL = '561259155365560360'
 const TINY_SHOES_CHANNEL = '562119245425672222'
 const OOC_CHANNEL = '561202141847355393'
+const MULTI_LINE_CHANNEL = '563714797481492502'
 
 // Emotes
 const MERCER_SHOE = '562116703312674817'
@@ -111,6 +112,16 @@ const parseMessage = (message, update = false) => {
 
   if (message.channel.id === TINY_SHOES_CHANNEL) {
     message.react(message.guild.emojis.get(MERCER_SHOE)).then(console.log).catch(console.error);
+    return;
+  }
+
+  if (message.channel.id === MULTI_LINE_CHANNEL) {
+    if (message.content.length < 200) {
+      sendContent = message.content
+      message.user.send("Too short for #multi-line-rp:" + sendContent);
+      message.delete().then().catch((err)=> { console.log(err)});
+    }
+    return;
   }
 
   const users = mongoServices.getDb().collection(USERS);

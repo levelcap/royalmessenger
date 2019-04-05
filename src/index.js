@@ -157,7 +157,7 @@ client.on('messageUpdate', (oldMessage, message) => {
 });
 
 client.on('guildMemberAdd', member => {
-  const message = `_Welcome to New Arcadia, ${member}! Have a look around, feel free to just jump into making a character and playing, or let us know if you have any questions._`
+  const message = `_Welcome to New Arcadia, ${member}! Have a look around, check out the gist in #welcome, feel free to just jump into making a character in #bios, or let us know if you have any questions._`
   member.guild.channels.get(OOC_CHANNEL).send(message); 
 })
 

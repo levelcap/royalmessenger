@@ -83,6 +83,7 @@ const handleMessage = (message, user, update = false) => {
       channel = message.channel;
       category = channel.parent.id;
       roles = message.member.roles.keyArray;
+      console.log(roles);
       if (category === IC_CATEGORY ) {
         if (roles.includes(ADMIN_ROLE) || roles.includes(CHARACTER_ROLE)) {
           newName = commandContent.replace(/\W/g, '').replace(/\s+/g, '-').toLowerCase();

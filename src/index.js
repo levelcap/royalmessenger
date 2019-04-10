@@ -33,6 +33,13 @@ const TINY_SHOES_CHANNEL = '562119245425672222'
 const OOC_CHANNEL = '561202141847355393'
 const MULTI_LINE_CHANNEL = '563714797481492502'
 
+// Categories
+const IC_CATEGORY = '561259088915202080'
+
+// Roles
+const ADMIN_ROLE = '561206997043773440'
+const CHARACTER_ROLE = '562284436343750667'
+
 // Emotes
 const MERCER_SHOE = '562116703312674817'
 
@@ -72,6 +79,18 @@ const handleMessage = (message, user, update = false) => {
       message.channel.send(`**${message.author}**, rolls a **${d20}**.`);
     } else if (command === 'weather') {
       message.channel.send(`Tamara Frey of WNAR says today will be chilly and overcast with a chance of rain.`);
+    } else if (command == 'claim') {
+      channel = message.channel;
+      category = channel.parent.id;
+      roles = message.member.roles.keyArray;
+      if (category === IC_CATEGORY ) {
+        if (roles.includes(ADMIN_ROLE) || roles.includes(CHARACTER_ROLE)) {
+          newName = commandContent.replace(/\W/g, '').replace(/\s+/g, '-').toLowerCase();
+          channel.setName(newName).then(newChannel => channel.send(`Claimed! Channel is now called: ${newChannel.name}`)).catch(console.error);
+        } else {
+          channel.send(`Sorry, you aren't allowed to do that! I guess the admins just don't trust you.`);
+        }
+      }
     }
   }
 

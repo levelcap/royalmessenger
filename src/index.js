@@ -86,9 +86,9 @@ const handleMessage = (message, user, update = false) => {
       if (category === IC_CATEGORY ) {
         if (roles.includes(ADMIN_ROLE) || roles.includes(CHARACTER_ROLE)) {
           newName = commandContent.replace(/\W/g, ' ').replace(/\s+/g, '-').toLowerCase();
-          channel.setName(newName).then(newChannel => channel.send(`Claimed! Channel is now called: ${newChannel.name}`)).catch(console.error);
+          channel.setName(newName).then(newChannel => channel.send(`You are now roleplaying in ${newChannel.name}`)).catch(console.error);
         } else {
-          channel.send(`Sorry, you aren't allowed to do that! I guess the admins just don't trust you.`);
+          channel.send(`Sorry, you aren't allowed to do that. I guess the admins just don't trust you.`);
         }
       }
     }

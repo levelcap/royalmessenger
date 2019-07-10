@@ -2,7 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const app = express();
 const Discord = require('discord.js');
-const { each, get } = require('lodash');
+const { each, get, sample } = require('lodash');
 const bodyParser = require('body-parser');
 const mongoServices = require('./services/mongoServices');
 const questCommand = require('./commands/questCommand');
@@ -43,8 +43,19 @@ const CHARACTER_ROLE = '562284436343750667'
 // Emotes
 const MERCER_SHOE = '562116703312674817'
 
-//collections
+// collections
 USERS = 'na_users'
+
+// Compliments
+COMPLIMENTS  = [
+  "is looking very pretty today.",
+  "has got an ass like POW!",
+  "stuns me with their intelligence every single day.",
+  "did real good, kid.",
+  "is just the best around.",
+  "has clearly been working out.",
+  "writes like a dream."
+]
 
 client.on('ready', () => {
   console.log('I am ready!');
@@ -79,6 +90,10 @@ const createNewICChannel = (guild) => {
   //   channel.setParent(IC_CATEGORY).then(console.log).catch(console.error);
   // }).catch(console.error);
   return;
+};
+
+const randomCompliment = () => {
+  return sample(COMPLIMENTS);
 };
 
 const handleMessage = (message, user, update = false) => {
@@ -146,7 +161,7 @@ const handleMessage = (message, user, update = false) => {
         message.delete().then().catch((err)=> { console.log(err)});
       }
     } else if (command === 'nice') {
-      message.channel.send(`${message.author} is looking very pretty today.`);
+      message.channel.send(`${message.author} ${randomCompliment()}`);
     }
   }
 

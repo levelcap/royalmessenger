@@ -63,7 +63,7 @@ const unclaimedChannelName = (channel) => {
 
 const unclaimedChannels = (channel) => {
   return client.channels.get(IC_CATEGORY).children.some((child) => {
-    return child.includes('unclaimed-rp')
+    return child.name.includes('unclaimed-rp')
   });
 };
 

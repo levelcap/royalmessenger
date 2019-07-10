@@ -50,6 +50,37 @@ client.on('ready', () => {
   console.log('I am ready!');
 });
 
+const canChangeICChannels = (category, roles) => {
+  if (category === IC_CATEGORY && (roles.includes(ADMIN_ROLE) || roles.includes(CHARACTER_ROLE))) {
+    return true;
+  }
+  return false;
+};
+
+const unclaimedChannelName = (channel) => {
+  return `unclaimed-rp-${channel.position}`;
+};
+
+const unclaimedChannels = (channel) => {
+  return client.channels.get(IC_CATEGORY).children.some((child) => {
+    return child.includes('unclaimed-rp')
+  });
+};
+
+const createNewICChannel = (guild) => {
+  console.log('Not implemented');
+  // let position = 0;
+  // client.channels.get(IC_CATEGORY).children.forEach((child) => {
+  //   if (child.position >= position) {
+  //     position = child.position + 1;
+  //   }
+  // });
+  // guild.createChannel(`unclaimed-rp-${position}`, 'text').then((channel) => {
+  //   channel.setParent(IC_CATEGORY).then(console.log).catch(console.error);
+  // }).catch(console.error);
+  return;
+};
+
 const handleMessage = (message, user, update = false) => {
   // Increment IC messages count
   if (message.channel.id === ROLEPLAY_CHANNEL && !update) {
@@ -74,24 +105,45 @@ const handleMessage = (message, user, update = false) => {
   }
 
   if (content.includes('/na')) {
+    channel = message.channel;
+    category = channel.parent.id;
+    sibling_channels = channel.parent.children;
+    roles = message.member.roles.keyArray();
+
     if (command === 'roll') {
       d20 = Math.floor(Math.random() * Math.floor(19)) + 1;
       message.channel.send(`**${message.author}**, rolls a **${d20}**.`);
     } else if (command === 'weather') {
       message.channel.send(`Tamara Frey of WNAR says today will be chilly and overcast with a chance of rain.`);
-    } else if (command == 'claim') {
-      channel = message.channel;
-      category = channel.parent.id;
-      roles = message.member.roles.keyArray();
-      if (category === IC_CATEGORY ) {
-        if (roles.includes(ADMIN_ROLE) || roles.includes(CHARACTER_ROLE)) {
-          newName = commandContent.replace(/\W/g, ' ').replace(/\s+/g, '-').toLowerCase();
-          channel.setName(newName).then(newChannel => channel.send(`You are now roleplaying in ${newChannel.name}`)).catch(console.error);
-          message.delete().then().catch((err)=> { console.log(err)});
-        } else {
-          channel.send(`Sorry, you aren't allowed to do that. I guess the admins just don't trust you.`);
-          message.delete().then().catch((err)=> { console.log(err)});
-        }
+    } else if (command === 'claim') {
+      if (canChangeICChannels(category, roles)) {
+        newName = commandContent.replace(/\W/g, ' ').replace(/\s+/g, '-').toLowerCase();
+        channel.setName(newName).then(newChannel => channel.send(`You are now roleplaying in ${newChannel.name}`)).catch(console.error);
+        message.delete().then().catch((err)=> { console.log(err)});
+      } else {
+        channel.send(`Sorry, you aren't allowed to do that. I guess the admins just don't trust you.`);
+        message.delete().then().catch((err)=> { console.log(err)});
+      }
+    } else if (command === 'unclaim') {
+      if (canChangeICChannels(category, roles)) {
+        newName = unclaimedChannelName(channel)
+        channel.setName(newName).then(newChannel => channel.send(`You have unclaimed this channel and it is now called ${newChannel.name}`)).catch(console.error);
+        message.delete().then().catch((err)=> { console.log(err)});
+      } else {
+        channel.send(`Sorry, you aren't allowed to do that. I guess the admins just don't trust you.`);
+        message.delete().then().catch((err)=> { console.log(err)});
+      }
+    } else if (command == 'more') {
+      if (unclaimedChannels()) {
+        channel.send(`There are still unclaimed RP channels, go claim one of those you greedy bastard.`);
+        message.delete().then().catch((err)=> { console.log(err)});
+      } else if (canChangeICChannels(category, roles)) {
+        createNewICChannel();
+        channel.send(`Not yet. Sooooon.`);
+        message.delete().then().catch((err)=> { console.log(err)});
+      } else {
+        channel.send(`Sorry, you aren't allowed to do that. I guess the admins just don't trust you.`);
+        message.delete().then().catch((err)=> { console.log(err)});
       }
     }
   }
@@ -179,7 +231,7 @@ client.on('messageUpdate', (oldMessage, message) => {
 
 client.on('guildMemberAdd', member => {
   const message = `_Welcome to New Arcadia, ${member}! Have a look around, check out the gist in #welcome, feel free to just jump into making a character in #bios, or let us know if you have any questions._`
-  member.guild.channels.get(OOC_CHANNEL).send(message); 
+  member.guild.channels.get(OOC_CHANNEL).send(message);
 })
 
 client.on('guildMemberRemove', member => {

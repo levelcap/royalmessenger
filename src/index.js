@@ -55,6 +55,13 @@ COMPLIMENTS  = [
   "is just the best around.",
   "has clearly been working out.",
   "writes like a dream."
+];
+
+DISSES  = [
+  "is a a real jerk.",
+  "can just go die.",
+  "looks tired today.",
+  "stinks out loud."
 ]
 
 client.on('ready', () => {
@@ -94,6 +101,10 @@ const createNewICChannel = (guild) => {
 
 const randomCompliment = () => {
   return sample(COMPLIMENTS);
+};
+
+const randomDiss = () => {
+  return sample(DISSES);
 };
 
 const handleMessage = (message, user, update = false) => {
@@ -162,6 +173,8 @@ const handleMessage = (message, user, update = false) => {
       }
     } else if (command === 'nice') {
       message.channel.send(`${message.author} ${randomCompliment()}`);
+    } else if (command === 'mean') {
+      message.channel.send(`${message.author} ${randomDiss()}`);
     }
   }
 

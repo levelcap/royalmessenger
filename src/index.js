@@ -32,6 +32,8 @@ const ROLEPLAY_CHANNEL = '561259155365560360'
 const TINY_SHOES_CHANNEL = '562119245425672222'
 const OOC_CHANNEL = '561202141847355393'
 const MULTI_LINE_CHANNEL = '563714797481492502'
+const BIOS_CHANNEL = "561202685676617738"
+const WELCOME_CHANNEL = "561201732386947075"
 
 // Categories
 const IC_CATEGORY = '561259088915202080'
@@ -260,7 +262,9 @@ client.on('messageUpdate', (oldMessage, message) => {
 });
 
 client.on('guildMemberAdd', member => {
-  const message = `_Welcome to New Arcadia, ${member}! Have a look around, check out the gist in #welcome, feel free to just jump into making a character in #bios, or let us know if you have any questions._`
+  BIOS_CHANNEL;
+  WELCOME_CHANNEL;
+  const message = `_Welcome to New Arcadia, ${member}! Have a look around, check out the gist in <${WELCOME_CHANNEL}>, feel free to just jump into making a character in <#${BIOS_CHANNEL}>, or let us know if you have any questions._`
   member.guild.channels.get(OOC_CHANNEL).send(message);
 })
 

@@ -64,7 +64,7 @@ DISSES  = [
   "can just go die.",
   "looks tired today.",
   "stinks out loud."
-]
+];
 
 MAX_IC_CHANNELS = 10;
 
@@ -91,6 +91,7 @@ const unclaimedChannels = () => {
 
 const createNewICChannel = (channel, message) => {
   ic_channels = client.channels.get(IC_CATEGORY).children;
+  guild = message.guild;
   if (ic_channels.size >= MAX_IC_CHANNELS) {
     channel.send(`There are enough channels already. Calm down.`);
     message.delete().then().catch((err)=> { console.log(err)});

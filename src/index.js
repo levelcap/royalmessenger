@@ -264,7 +264,7 @@ client.on('messageUpdate', (oldMessage, message) => {
 client.on('guildMemberAdd', member => {
   BIOS_CHANNEL;
   WELCOME_CHANNEL;
-  const message = `_Welcome to New Arcadia, ${member}! Have a look around, check out the gist in <${WELCOME_CHANNEL}>, feel free to just jump into making a character in <#${BIOS_CHANNEL}>, or let us know if you have any questions._`
+  const message = `_Welcome to New Arcadia, ${member}! Have a look around, check out the gist in <#${WELCOME_CHANNEL}>, feel free to just jump into making a character in <#${BIOS_CHANNEL}>, or let us know if you have any questions._`
   member.guild.channels.get(OOC_CHANNEL).send(message);
 })
 

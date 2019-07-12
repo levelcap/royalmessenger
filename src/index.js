@@ -66,6 +66,8 @@ DISSES  = [
   "stinks out loud."
 ]
 
+MAX_IC_CHANNELS = 10;
+
 client.on('ready', () => {
   console.log('I am ready!');
 });
@@ -81,23 +83,28 @@ const unclaimedChannelName = (channel) => {
   return `unclaimed-rp-${channel.position}`;
 };
 
-const unclaimedChannels = (channel) => {
+const unclaimedChannels = () => {
   return client.channels.get(IC_CATEGORY).children.some((child) => {
     return child.name.includes('unclaimed-rp')
   });
 };
 
-const createNewICChannel = (guild) => {
-  console.log('Not implemented');
-  // let position = 0;
-  // client.channels.get(IC_CATEGORY).children.forEach((child) => {
-  //   if (child.position >= position) {
-  //     position = child.position + 1;
-  //   }
-  // });
-  // guild.createChannel(`unclaimed-rp-${position}`, 'text').then((channel) => {
-  //   channel.setParent(IC_CATEGORY).then(console.log).catch(console.error);
-  // }).catch(console.error);
+const createNewICChannel = (channel, message) => {
+  ic_channels = client.channels.get(IC_CATEGORY).children;
+  if (ic_channels.size >= MAX_IC_CHANNELS) {
+    channel.send(`There are enough channels already. Calm down.`);
+    message.delete().then().catch((err)=> { console.log(err)});
+    return;
+  }
+  let position = 0;
+  ic_channels.forEach((child) => {
+    if (child.position >= position) {
+      position = child.position + 1;
+    }
+  });
+  guild.createChannel(`unclaimed-rp-${position}`, 'text').then((channel) => {
+    channel.setParent(IC_CATEGORY).then(console.log).catch(console.error);
+  }).catch(console.error);
   return;
 };
 
@@ -166,9 +173,7 @@ const handleMessage = (message, user, update = false) => {
         channel.send(`There are still unclaimed RP channels, go claim one of those you greedy bastard.`);
         message.delete().then().catch((err)=> { console.log(err)});
       } else if (canChangeICChannels(category, roles)) {
-        createNewICChannel();
-        channel.send(`Not yet. Sooooon.`);
-        message.delete().then().catch((err)=> { console.log(err)});
+        createNewICChannel(channel, message);
       } else {
         channel.send(`Sorry, you aren't allowed to do that. I guess the admins just don't trust you.`);
         message.delete().then().catch((err)=> { console.log(err)});

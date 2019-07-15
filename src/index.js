@@ -34,6 +34,7 @@ const OOC_CHANNEL = '561202141847355393'
 const MULTI_LINE_CHANNEL = '563714797481492502'
 const BIOS_CHANNEL = "561202685676617738"
 const WELCOME_CHANNEL = "561201732386947075"
+const GETTING_STARTED_CHANNEL = "588151672598167573"
 
 // Categories
 const IC_CATEGORY = '561259088915202080'
@@ -104,7 +105,7 @@ const createNewICChannel = (channel, message) => {
     }
   });
   guild.createChannel(`unclaimed-rp-${position}`, 'text').then((channel) => {
-    channel.setParent(IC_CATEGORY).then(console.log).catch(console.error);
+    channel.setParent(IC_CATEGORY).then().catch(console.error);
   }).catch(console.error);
   return;
 };
@@ -270,7 +271,7 @@ client.on('messageUpdate', (oldMessage, message) => {
 client.on('guildMemberAdd', member => {
   BIOS_CHANNEL;
   WELCOME_CHANNEL;
-  const message = `_Welcome to New Arcadia, ${member}! Have a look around, check out the gist in <#${WELCOME_CHANNEL}>, feel free to just jump into making a character in <#${BIOS_CHANNEL}>, or let us know if you have any questions._`
+  const message = `_Welcome to New Arcadia, ${member}! Have a look around, check out the gist in <#${WELCOME_CHANNEL}>, feel free to just jump into making a character in <#${BIOS_CHANNEL}>, check out some tips on creating a character in <#${GETTING_STARTED_CHANNEL}>, or let us know if you have any questions._`
   member.guild.channels.get(OOC_CHANNEL).send(message);
 })
 

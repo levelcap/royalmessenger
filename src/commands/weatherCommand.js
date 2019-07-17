@@ -36,7 +36,7 @@ module.exports = {
 
       if (cachedReport()) {
         console.log('Using cached weather report.');
-        message.channel.send(lastReport.report);
+        message.channel.send(`${lastReport.report}.`);
         return;
       }
 

@@ -1,8 +1,20 @@
 const request = require('request');
 const moment = require('moment');
+const { sample } = require('lodash');
 const darkSkyApiBase = "https://api.darksky.net";
 const darkSkyKey = process.env.DARK_SKY_KEY;
 const forecastUrl = `${darkSkyApiBase}/forecast/${darkSkyKey}/46.4956554,-123.3184781`;
+
+const GOOD_WEATHER = [
+  "healing winds",
+  "a colorful rain that tinkles like laughter",
+  "a beam of sun just for you"
+]
+const BAD_WEATHER = [
+  "red lightning that tears at the fabric of reality",
+  "ghostnados",
+  "thunder that carries ancient voices, harsh with recrimination"
+]
 
 const lastReport = {
   checked: null,
@@ -17,9 +29,9 @@ const cachedReport = () => {
 const getMagicalWeather = () => {
   d20 = Math.floor(Math.random() * Math.floor(19)) + 1;
   if (d20 === 20){
-    return "healing winds";
+    return sample(GOOD_WEATHER);
   } else if (d20 === 1) {
-    return "red lightning filled with ghosts";
+    return sample(BAD_WEATHER);
   } else {
     return false;
   }

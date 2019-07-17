@@ -13,15 +13,18 @@
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.18.2",
+    "bson": ">=1.0.5",
     "chance": "^1.0.13",
     "discord.js": "^11.3.0",
     "dotenv": "^5.0.0",
     "ejs": "^2.5.7",
     "express": "^4.16.2",
-    "lodash": ">=4.17.11",
+    "http": "0.0.0",
+    "lodash": "^4.17.14",
+    "moment": "^2.24.0",
     "mongodb": "^3.0.2",
     "node-emoji": "^1.8.1",
-    "to-zalgo": "^1.0.1",
-    "bson": ">=1.0.5"
+    "request": "^2.88.0",
+    "to-zalgo": "^1.0.1"
   }
 }

@@ -17,10 +17,13 @@ const mockCommand = require('./commands/mockCommand');
 const treasuryCommand = require('./commands/treasuryCommand');
 const sayCommand = require('./commands/sayCommand');
 const dungeonCommand = require('./commands/dungeonCommand');
+// New Arcadia commands
+const weatherCommand = require('./commands/weatherCommand');
 
 const uprisingService = require('./services/uprisingService');
 const questService = require('./services/questServices');
 const spookyService = require('./services/spookyService');
+
 let lastMessages = new Map();
 let sentSpook = false;
 
@@ -151,7 +154,7 @@ const handleMessage = (message, user, update = false) => {
       d20 = Math.floor(Math.random() * Math.floor(19)) + 1;
       message.channel.send(`**${message.author}**, rolls a **${d20}**.`);
     } else if (command === 'weather') {
-      message.channel.send(`Tamara Frey of WNAR says today will be chilly and overcast with a chance of rain.`);
+      weatherCommand.run(message);
     } else if (command === 'claim') {
       if (canChangeICChannels(category, roles)) {
         newName = commandContent.replace(/\W/g, ' ').replace(/\s+/g, '-').toLowerCase();

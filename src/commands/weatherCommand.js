@@ -54,6 +54,7 @@ module.exports = {
 
       const json = JSON.parse(body);
       const currently = json.currently;
+      const fullMoon = json.daily.data[0].moonPhase === .5;
       const temp = Math.floor(currently.temperature)
       const precipProb = Math.floor(currently.precipProbability * 100)
       let precipType = currently.precipType;
@@ -64,6 +65,9 @@ module.exports = {
       let report = `Tamara Frey of WNAR says today will be ${currently.summary.toLowerCase()} and ${temp}F`;
       if (precipProb > 15) {
         report += ` with a ${precipProb}% chance of ${precipType}`;
+      }
+      if (fullMoon) {
+        report += `. Tonight is a full moon, so be careful out there, Arcadians`;
       }
       lastReport.checked = moment();
       lastReport.report = report;

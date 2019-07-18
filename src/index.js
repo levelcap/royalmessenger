@@ -11,7 +11,6 @@ const messagesCommand = require('./commands/messagesCommand');
 const oocnounceCommand = require('./commands/oocnounceCommand');
 const announceCommand = require('./commands/announceCommand');
 const statusCommand = require('./commands/statusCommand');
-const helpCommand = require('./commands/helpCommand');
 const quellCommand = require('./commands/quellCommand');
 const mockCommand = require('./commands/mockCommand');
 const treasuryCommand = require('./commands/treasuryCommand');
@@ -19,6 +18,7 @@ const sayCommand = require('./commands/sayCommand');
 const dungeonCommand = require('./commands/dungeonCommand');
 // New Arcadia commands
 const weatherCommand = require('./commands/weatherCommand');
+const helpCommand = require('./commands/helpCommand');
 
 const uprisingService = require('./services/uprisingService');
 const questService = require('./services/questServices');
@@ -187,6 +187,8 @@ const handleMessage = (message, user, update = false) => {
       message.channel.send(`${message.author} ${randomCompliment()}`);
     } else if (command === 'mean') {
       message.channel.send(`${message.author} ${randomDiss()}`);
+    } else if (command == 'help' || command === '?') {
+      helpCommand.run(message);
     }
   }
 

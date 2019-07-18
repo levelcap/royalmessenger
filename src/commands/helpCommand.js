@@ -59,31 +59,31 @@ const helpFields = [
     value: 'Roll a d20.',
   },
   {
-    name: '/rm weather',
+    name: '/na weather',
     value: 'Get the current weather in New Arcadia.',
   },
   {
-    name: '/rm help or ?',
+    name: '/na help or ?',
     value: 'This. You are currently looking at it.',
   },
   {
-    name: '/rm claim {room_name}',
+    name: '/na claim {room_name}',
     value: 'Use it in unclaimed rooms in the In Character category to claim them for your scenes.',
   },
   {
-    name: '/rm unclaim',
+    name: '/na unclaim',
     value: 'Reverts an In Character room back to its unclaimed state, for when you are done with your scenes.',
   },
   {
-    name: '/rm more',
+    name: '/na more',
     value: 'Adds a new unclaimed RP channel to the In Character category if none exist.',
   },
   {
-    name: '/rm nice',
+    name: '/na nice',
     value: 'The bot will say something nice!',
   },
   {
-    name: '/rm mean',
+    name: '/na mean',
     value: 'The bot will say something mean!',
   },
 ];

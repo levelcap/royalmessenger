@@ -84,7 +84,7 @@ const canChangeICChannels = (category, roles) => {
 };
 
 const canAddICChannels = (roles) => {
-  if (category === IC_CATEGORY && (roles.includes(ADMIN_ROLE) || roles.includes(CHARACTER_ROLE))) {
+  if (roles.includes(ADMIN_ROLE) || roles.includes(CHARACTER_ROLE))) {
     return true;
   }
   return false;

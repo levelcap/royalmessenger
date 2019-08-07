@@ -184,7 +184,7 @@ const handleMessage = (message, user, update = false) => {
       if (unclaimedChannels()) {
         channel.send(`There are still unclaimed RP channels, go claim one of those you greedy bastard.`);
         message.delete().then().catch((err)=> { console.log(err)});
-      } else if (canAddICChannels(category, roles)) {
+      } else if (canAddICChannels(roles)) {
         createNewICChannel(channel, message);
       } else {
         channel.send(`Sorry, you aren't allowed to do that. I guess the admins just don't trust you.`);

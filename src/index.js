@@ -83,6 +83,13 @@ const canChangeICChannels = (category, roles) => {
   return false;
 };
 
+const canAddICChannels = (roles) => {
+  if (category === IC_CATEGORY && (roles.includes(ADMIN_ROLE) || roles.includes(CHARACTER_ROLE))) {
+    return true;
+  }
+  return false;
+};
+
 const unclaimedChannelName = (channel) => {
   return `unclaimed-rp-${channel.position}`;
 };
@@ -177,7 +184,7 @@ const handleMessage = (message, user, update = false) => {
       if (unclaimedChannels()) {
         channel.send(`There are still unclaimed RP channels, go claim one of those you greedy bastard.`);
         message.delete().then().catch((err)=> { console.log(err)});
-      } else if (canChangeICChannels(category, roles)) {
+      } else if (canAddICChannels(category, roles)) {
         createNewICChannel(channel, message);
       } else {
         channel.send(`Sorry, you aren't allowed to do that. I guess the admins just don't trust you.`);

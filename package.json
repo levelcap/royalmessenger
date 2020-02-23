@@ -15,6 +15,7 @@
     "body-parser": "^1.18.2",
     "bson": ">=1.0.5",
     "chance": "^1.0.13",
+    "cron": "^1.8.2",
     "discord.js": "^11.3.0",
     "dotenv": "^5.0.0",
     "ejs": "^2.5.7",
@@ -22,9 +23,11 @@
     "http": "0.0.0",
     "lodash": "^4.17.14",
     "moment": "^2.24.0",
-    "mongodb": "^3.0.2",
+    "mongodb": "^3.5.3",
     "node-emoji": "^1.8.1",
     "request": "^2.88.0",
+    "slack": "^11.0.2",
+    "slackbots": "^1.2.0",
     "to-zalgo": "^1.0.1"
   }
 }

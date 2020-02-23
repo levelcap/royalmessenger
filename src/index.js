@@ -4,6 +4,7 @@ const app = express();
 const Discord = require('discord.js');
 const { each, get, sample } = require('lodash');
 const bodyParser = require('body-parser');
+
 const mongoServices = require('./services/mongoServices');
 const questCommand = require('./commands/questCommand');
 const killCommand = require('./commands/killCommand');
@@ -23,11 +24,19 @@ const helpCommand = require('./commands/helpCommand');
 const uprisingService = require('./services/uprisingService');
 const questService = require('./services/questServices');
 const spookyService = require('./services/spookyService');
+const slackService = require('./services/slackService');
 
 let lastMessages = new Map();
 let sentSpook = false;
 
 const client = new Discord.Client();
+
+const CronJob = require('cron').CronJob;
+const winnersJob = new CronJob('0 0 11 1 * *', () => {
+  slackService.doScoring();
+}, null, true, 'America/New_York');
+winnersJob.start();
+
 const token = process.env.DISCORD_TOKEN;
 
 // Channels

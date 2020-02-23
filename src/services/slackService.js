@@ -122,7 +122,7 @@ module.exports = {
             }
           }
         ];
-        slackApi.chat.postMessage({channel: CHANNELS.BOT, text, blocks});
+        slackApi.chat.postMessage({channel: CHANNELS.GAMES, text, blocks});
       });
     });
   },

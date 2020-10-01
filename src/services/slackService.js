@@ -19,6 +19,9 @@ module.exports = {
     const oneMonthAgo = moment().subtract(1, 'months');
     const scoreMap = new Map();
     const SCORED_REACTIONS = ['goodgoldfish', 'badowl', 'stinkbug'];
+    const STRIKE = [':alissa:', ':unionize:'];
+    let strikeCount = 0;
+
     slackApi.conversations.history({channel: CHANNELS.GAMES, oldest: oneMonthAgo.unix(), limit: 999}).then(history => {
       each(history.messages, (message) => {
         if (message.type !== 'message') {
@@ -29,6 +32,11 @@ module.exports = {
         if (ts < oneMonthAgo) {
           return;
         }
+
+        each(STRIKE, (strike) => {
+          var re = new RegExp(strike, "g");
+          strikeCount += (message.text.match(re) || []).length;
+        });
 
         if (!message.reactions) {
           return;
@@ -51,10 +59,15 @@ module.exports = {
             rScore += score;
             userScores.set(reaction.name, rScore);
           }
+
+          if (STRIKE.includes(reaction.name)) {
+            strikeCount += reaction.count;
+          }
         });
 
         scoreMap.set(message.user, userScores);
       });
+
       slackApi.users.list().then(users => {
         const userIdNameMap = new Map();
         each(users.members, (user) => {
@@ -108,7 +121,7 @@ module.exports = {
             "type": "section",
             "text": {
               "type": "mrkdwn",
-              "text": `*The Most Evil Owl Is...:*\n_${owlWinner[1]}_ with ${owlWinner[0]} :badowl:s`,
+              "text": `*The Most Evil Owl Is...:*\n_${owlWinner[1]}_ with ${owlWinner[0]} :badowl:s!`,
             }
           },
           {
@@ -118,7 +131,14 @@ module.exports = {
             "type": "section",
             "text": {
               "type": "mrkdwn",
-              "text": `*The Stinkbug - _BECAUSE THEY STINK_ - Is...:*\n_${stinkbugWinner[1]}_ with ${stinkbugWinner[0]} :stinkbug:s`,
+              "text": `*The Stinkbug - _BECAUSE THEY STINK_ - Is...:*\n_${stinkbugWinner[1]}_ with ${stinkbugWinner[0]} :stinkbug:s!`,
+            }
+          },
+          {
+            "type": "section",
+            "text": {
+              "type": "mrkdwn",
+              "text": `:alissa::unionize: *STRIKE STRIKE STRIKE:* :alissa::unionize:\nWe demanded a union _${strikeCount}_ times this month!`,
             }
           }
         ];

@@ -1,6 +1,7 @@
 const moment = require('moment');
 const Slack = require('slack')
 const { each } = require('lodash');
+const fs = require('fs');
 
 const slackToken = process.env.SLACK_TOKEN;
 const CHANNELS = {
@@ -16,11 +17,13 @@ console.log("Turned it on!");
 
 module.exports = {
   doScoring: () => {
-    const oneMonthAgo = moment().subtract(1, 'months');
+    const oneMonthAgo = moment().subtract(1, 'month');
     const scoreMap = new Map();
     const SCORED_REACTIONS = ['goodgoldfish', 'badowl', 'stinkbug'];
     const STRIKE = [':alissa:', ':unionize:'];
+    const userMap = new Map();
     let strikeCount = 0;
+    let messageLog = [];
 
     const scoreHistoryPage = (history) => {
       each(history.messages, (message) => {
@@ -37,6 +40,8 @@ module.exports = {
           var re = new RegExp(strike, "g");
           strikeCount += (message.text.match(re) || []).length;
         });
+
+        messageLog.unshift(`${userMap[message.user]}: ${message.text}`);
 
         if (!message.reactions) {
           return;
@@ -70,7 +75,14 @@ module.exports = {
     };
 
     const nextHistoryPage = (cursor) => {
-      slackApi.conversations.history({channel: CHANNELS.GAMES, cursor: cursor, limit: 999}).then(history => {
+      const args = {
+        channel: CHANNELS.GAMES,
+        cursor: cursor,
+        oldest: oneMonthAgo.unix(),
+        latest: moment().unix(),
+        limit: 999
+      }
+      slackApi.conversations.history(args).then(history => {
         scoreHistoryPage(history);
         if (history.has_more) {
           nextHistoryPage(history.response_metadata.next_cursor);
@@ -148,6 +160,9 @@ module.exports = {
             }
           },
           {
+            "type": "divider"
+          },
+          {
             "type": "section",
             "text": {
               "type": "mrkdwn",
@@ -156,16 +171,21 @@ module.exports = {
           }
         ];
         slackApi.chat.postMessage({channel: CHANNELS.GAMES, text, blocks});
+        fs.writeFile('messageLog.txt', messageLog.join("\n\n"), function (err) {
+          if (err) throw err;
+          slackApi.files.upload({channels: CHANNELS.GAMES, file: fs.createReadStream('messageLog.txt')}).then(()=>{ console.log("done") });
+        });
      });
     }
 
-    slackApi.conversations.history({channel: CHANNELS.GAMES, oldest: oneMonthAgo.unix(), limit: 999}).then(history => {
-      scoreHistoryPage(history);
-      if (history.response_metadata.next_cursor != "") {
-        nextHistoryPage(history.response_metadata.next_cursor);
-      } else {
-        postScores();
-      }
+    slackApi.users.list().then(users => {
+      each(users.members, (user) => {
+        if (user.is_bot === false) {
+          const name = user.profile.display_name_normalized ? user.profile.display_name_normalized : user.profile.real_name_normalized;
+          userMap[user.id] =  name;
+        }
+      });
+      nextHistoryPage("");
     });
   },
 };

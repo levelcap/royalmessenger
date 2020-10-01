@@ -72,7 +72,6 @@ module.exports = {
     const nextHistoryPage = (cursor) => {
       slackApi.conversations.history({channel: CHANNELS.GAMES, cursor: cursor, limit: 999}).then(history => {
         scoreHistoryPage(history);
-        console.log(history);
         if (history.has_more) {
           nextHistoryPage(history.response_metadata.next_cursor);
         } else {
@@ -152,7 +151,7 @@ module.exports = {
             "type": "section",
             "text": {
               "type": "mrkdwn",
-              "text": `:alissa::unionize: *STRIKE STRIKE STRIKE:* :alissa::unionize:\nWe demanded a union _${strikeCount}_ times this month!`,
+              "text": `:alissa::unionize: *STRIKE STRIKE STRIKE* :alissa::unionize:\nWe demanded a union _${strikeCount}_ times this month!`,
             }
           }
         ];

@@ -22,7 +22,7 @@ module.exports = {
     const STRIKE = [':alissa:', ':unionize:'];
     let strikeCount = 0;
 
-    slackApi.conversations.history({channel: CHANNELS.GAMES, oldest: oneMonthAgo.unix(), limit: 999}).then(history => {
+    const scoreHistoryPage = (history) => {
       each(history.messages, (message) => {
         if (message.type !== 'message') {
           return;
@@ -67,7 +67,21 @@ module.exports = {
 
         scoreMap.set(message.user, userScores);
       });
+    };
 
+    const nextHistoryPage = (cursor) => {
+      slackApi.conversations.history({channel: CHANNELS.GAMES, cursor: cursor, limit: 999}).then(history => {
+        scoreHistoryPage(history);
+        console.log(history);
+        if (history.has_more) {
+          nextHistoryPage(history.response_metadata.next_cursor);
+        } else {
+          postScores();
+        }
+      });
+    };
+
+    const postScores = () => {
       slackApi.users.list().then(users => {
         const userIdNameMap = new Map();
         each(users.members, (user) => {
@@ -143,7 +157,16 @@ module.exports = {
           }
         ];
         slackApi.chat.postMessage({channel: CHANNELS.GAMES, text, blocks});
-      });
+     });
+    }
+
+    slackApi.conversations.history({channel: CHANNELS.GAMES, oldest: oneMonthAgo.unix(), limit: 999}).then(history => {
+      scoreHistoryPage(history);
+      if (history.response_metadata.next_cursor != "") {
+        nextHistoryPage(history.response_metadata.next_cursor);
+      } else {
+        postScores();
+      }
     });
   },
 };

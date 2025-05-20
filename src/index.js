@@ -14,6 +14,11 @@ const winnersJob = new CronJob('0 0 11 1 * *', () => {
 }, null, true, 'America/New_York');
 winnersJob.start();
 
+const musicJob = new CronJob('0 0 13 * * 5', () => {
+  slackService.doMusicReminder();
+}, null, true, 'America/New_York');
+musicJob.start();
+
 app.use(express.static('public'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));

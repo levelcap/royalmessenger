@@ -1,12 +1,14 @@
 const moment = require('moment');
 const Slack = require('slack')
-const { each } = require('lodash');
+const { each, sample } = require('lodash');
 const fs = require('fs');
 
 const slackToken = process.env.SLACK_TOKEN;
 const CHANNELS = {
   GAMES: "C95AK9BJ6",
   BOT: "CUEHVGZBR",
+  ALISSA: "USDSWTUUB",
+  DAVE: "U943XJWUV",
 };
 
 const slackApi = new Slack({
@@ -188,4 +190,22 @@ module.exports = {
       nextHistoryPage("");
     });
   },
+
+  doMusicReminder: () => {
+    const reminders = [
+      "Spend up to $30 on the music you currently wish you were listening to",
+      "Read this past week's bandcamp articles",
+      "Listen to a Qobuz editor recommended album",
+      "Listen to a radio station",
+      "Text a friend about their current favorite songs",
+      "Listen to an NPR playlist",
+      "Listen to some bands playing an upcoming deepcuts show",
+      "Listen to some bands from the bowery newsletter",
+      "What's pitchfork yapping about?",
+      "Listen to the soundtrack for a show or movie you like",
+    ];
+
+    const text = sample(reminders);
+    slackApi.chat.postMessage({channel: CHANNELS.ALISSA, text});
+  }
 };

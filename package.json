@@ -4,7 +4,7 @@
   "description": "Royal Messengers",
   "main": "src/index.js",
   "engines": {
-    "node": "8.x"
+    "node": "23.x"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

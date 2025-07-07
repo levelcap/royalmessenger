@@ -203,6 +203,8 @@ module.exports = {
       "Listen to some bands from the bowery newsletter",
       "What's pitchfork yapping about?",
       "Listen to the soundtrack for a show or movie you like",
+      "Listen to All Songs Considered or another music discovery podcast",
+      "Ask Bryna or Dave for a playlist they want and then make and share it (spend up to 15 dollars if you cannot fulfill their request with existing content or risk being a dissappointment)",
     ];
 
     const text = sample(reminders);

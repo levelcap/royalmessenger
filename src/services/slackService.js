@@ -205,6 +205,7 @@ module.exports = {
       "Listen to the soundtrack for a show or movie you like",
       "Listen to All Songs Considered or another music discovery podcast",
       "Ask Bryna or Dave for a playlist they want and then make and share it (spend up to 15 dollars if you cannot fulfill their request with existing content or risk being a dissappointment)",
+      "Have a listening party! Optionally buy a new album or two to fuel said listening party",
     ];
 
     const text = sample(reminders);
